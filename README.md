@@ -52,7 +52,7 @@ Before using `papersumgpt`, you must run`chatgpt_wrapper` to start the ChatGPT s
 ```bash
 chatgpt install
 ```
-Then, the nightly will be downloaded and installed. AFter that, you can start the server by running the following command:
+Then, the nightly will be downloaded and installed. After that, you can start the server by running the following command:
 
 ```bash
 chatgpt

@@ -47,17 +47,25 @@ pip install .
 
 ## Usage
 ### (1) Run `chatgpt_wrapper` before using `papersumgpt`
-Before using `papersumgpt`, you must run`chatgpt_wrapper` to start the ChatGPT server. You can use the following command to start the server:
+Before using `papersumgpt`, you must run `chatgpt_wrapper` to start the ChatGPT server. 
+
+Since you are first running `chatgpt_wrapper` in your computer, you might input the following command to install `playwright`:
+```
+playwright install
+```
+The *nightly* will be downloaded and installed in your local machine.
+
+Next, you can use the following command to start the server:
 
 ```bash
 chatgpt install
 ```
-Then, the nightly will be downloaded and installed. After that, you can start the server by running the following command:
+Login to your ChatGPT account in *Nightly* browser. If you see the chat window, close the browser and type `/exit` to close the `chatgpt_wrapper`. After that, you can restart the `chatgpt_wrapper` by running the following command:
 
 ```bash
 chatgpt
 ```
-This is the original functionality of `chatgpt_wrapper`. For more information, please visit the [chatgpt_wrapper github repository](https://github.com/mmabrouk/chatgpt-wrapper).
+This is the original functionality of `chatgpt_wrapper`. For more information, please visit the [chatgpt_wrapper github repository](https://github.com/mmabrouk/chatgpt-wrapper). 
 
 ### (2) Run `papersumgpt` to summarize the content of a paper
 After running `chatgpt_wrapper`, you can use `papersumgpt` to summarize the content of a paper. You can use the following command to summarize the content of a paper:
@@ -73,11 +81,7 @@ ERROR: There is no file in the current directory. Please check the current direc
 ------------------------------------------------
 ```
 
-Note that you must put the paper you want to summarize in the current working directory. In this README, we will use `chatgpt-a+meta+analysis+after+2.5+months.pdf` as an example. Refer to the `ExampleRun/` folder. 
-
-```bash
-cd ExampleRun/
-```
+Note that you must put the paper you want to summarize in the current working directory. In this README, we will use `chatgpt-a+meta+analysis+after+2.5+months.pdf` as an example. Refer to the `ExampleRun/` folder. Copy that file to the current working directory and run `papersumgpt` again:
 ```bash
 papersumgpt
 ```

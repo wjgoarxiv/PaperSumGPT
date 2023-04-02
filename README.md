@@ -1,9 +1,10 @@
 # PaperSumGPT
+<a href="https://www.buymeacoffee.com/woojingo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 120px !important;" ></a>
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.6+](https://img.shields.io/badge/python-3.6%2B-blue.svg)](https://www.python.org/downloads/release/python-360/)
 
-*PaperSumGPT is a tool for abbreviating scientific paper contents using ChatGPT, designed to help researchers and students to quickly understand the key points of academic papers.*
+*PaperSumGPT is a tool for abbreviating **scientific paper contents** using ChatGPT, designed to help researchers and students to quickly understand the key points of academic papers.*
 
 ## Table of Contents
 - [How to Install](#how-to-install)
@@ -23,7 +24,9 @@ You can install PaperSumGPT by cloning this repository and install it from the s
 
 ```bash
 git clone https://github.com/wjgoarxiv/papersumgpt.git
-cd papersumgpt
+```
+```bash
+cd PaperSumGPT/
 ```
 
 ### (2) Install dependencies

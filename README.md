@@ -30,7 +30,10 @@ cd PaperSumGPT/
 ```
 
 ### (2) Install dependencies
-And you must use `install_old-repo.sh` to install the legacy version of `chatgpt_wrapper`. The new version of `chatgpt_wrapper` is not compatible with the current version of `papersumgpt` (since the new version of `chatgpt_wrapper` will use the ChatGPT API, not the stream-based one). 
+And you must use `install_old-repo.sh` to install the legacy version of `chatgpt_wrapper`. The new version of `chatgpt_wrapper` is not compatible with the current version of `papersumgpt` (since the new version of `chatgpt_wrapper` will use the ChatGPT API, not the stream-based one).
+```bash
+chmod +x * 
+```
 ```bash
 ./install_old-repo.sh
 ```

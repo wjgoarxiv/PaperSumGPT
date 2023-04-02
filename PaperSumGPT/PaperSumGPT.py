@@ -29,7 +29,7 @@ def main():
     1. Markdown (`.md`) file
     2. PDF (`.pdf`) file
 
-    Note that the option 2 would convert the PDF file to a markdown file using the `pdf2md` package: """))
+    Note that the option 2 would convert the PDF file to a markdown file using the `PyPDF2` library: """))
     print('\n')
     print('------------------------------------------------')
 

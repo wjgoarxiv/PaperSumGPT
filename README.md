@@ -26,7 +26,7 @@ You can install PaperSumGPT by cloning this repository and install it from the s
 git clone https://github.com/wjgoarxiv/papersumgpt.git
 ```
 ```bash
-cd PaperSumGPT/
+cd papersumgpt/
 ```
 
 ### (2) Install dependencies

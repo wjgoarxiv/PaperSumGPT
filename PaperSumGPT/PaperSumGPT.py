@@ -196,27 +196,31 @@ def main():
     
     # ------ Template starts ------
 
-    # TITLE
+    # Title
     (Bring the title from the foremost heading in the document. The powerful hint is that the title comes before the people who wrote the document.)
 
-    ## INTRODUCTION
+    ## Introduction
 
-    ## METHODOLOGY
+    ## Methodology
+    ### 
 
-    ## RESULTS & DISCUSSION
+    ## Results & discussion
 
-    ## CONCLUSION
+    ## Conclusions
 
-    ## SIGNIFICANCE OF THIS STUDY
+    ## Significance of this study
 
-    ## THINGS TO LOOK OUT FOR IN FOLLOW-UP RESEARCH
+    ## Things to look out for in follow-up research
 
-    ## REFERENCES THAT WOULD BE HELPFUL FOR FURTHER RESEARCHES
+    ### Useful references to consider 
     ...
 
     # ------ Template ends ------
 
-    And please, write the outputs thinking you are writing PPT slides (something like list format). But NOT too simple. You have to write the outputs in a way that the readers can understand the contents easily.
+    And please, write the outputs thinking you are writing PPT slides. But NOT too simple. You have to write the outputs in a way that the readers can understand the contents easily.
+    
+    Consecutively, if possible, please find some useful references (including title and authors) from PDF or Markdown input file, and re-write them into `### Useful references to consider` subheader. 
+
     """
 
     # join response parts to form final response

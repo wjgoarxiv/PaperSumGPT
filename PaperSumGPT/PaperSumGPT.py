@@ -29,7 +29,7 @@ def main():
     1. Markdown (`.md`) file
     2. PDF (`.pdf`) file
 
-    Note that the option 2 would convert the PDF file to a markdown file using the `PyPDF2` library: """))
+    Note that the option 2 would convert the PDF file to a markdown file using the `pdf2md` package: """))
     print('\n')
     print('------------------------------------------------')
 
@@ -193,7 +193,8 @@ def main():
 
     # define final prompt message
     final_prompt = """Now, all the inputs are given to you. Please, abbreviate all the input contents fitting them into the following markdown format. You have to fill the contents in the markdown format. The markdown format is as follows:
-    ```
+    /* 
+
     # TITLE
     (Bring the title from the foremost heading in the document. The powerful hint is that the title comes before the people who wrote the document.)
 
@@ -206,15 +207,11 @@ def main():
     ## CONCLUSION
 
     ## SIGNIFICANCE OF THIS STUDY
+
+    ## THINGS TO LOOK OUT FOR IN FOLLOW-UP RESEARCH
     ...
 
-    ## STEPS TO BE FOLLOWED:
-    1. Remove any unnecessary whitespaces or characters.
-    2. Identify the headings and subheadings in the document.
-    3. Use "#" to represent the main headings and "##" to represent the subheadings.
-    4. Use "*" to represent bullet points.
-    5. Use ">" to represent quotes.
-    ```
+    */
     And please, write the outputs thinking you are writing PPT slides. But NOT too simple. You have to write the outputs in a way that the readers can understand the contents easily.
     """
 

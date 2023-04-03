@@ -46,7 +46,7 @@ Then, you can install PaperSumGPT by running the following command:
 pip install .
 ```
 
-> ### (4) For Windows users
+> ### (4) For Windows users (first time only)
 > Since there are no pre-built binaries for Windows, follow the instructions below to install PaperSumGPT on Windows.
 > 1. In the search tab, type `Turn Windows features On (Windows 기능 켜기/끄기 in Korean)`. Then, check the box of `Windows Subsystem for Linux`. 
 > 2. Next, reboot your computer.

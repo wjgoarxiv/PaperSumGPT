@@ -193,7 +193,8 @@ def main():
 
     # define final prompt message
     final_prompt = """Now, all the inputs are given to you. Please, abbreviate all the input contents fitting them into the following markdown format. You have to fill the contents in the markdown format. The markdown format is as follows:
-    /* 
+    
+    # ------ Template starts ------
 
     # TITLE
     (Bring the title from the foremost heading in the document. The powerful hint is that the title comes before the people who wrote the document.)
@@ -209,10 +210,13 @@ def main():
     ## SIGNIFICANCE OF THIS STUDY
 
     ## THINGS TO LOOK OUT FOR IN FOLLOW-UP RESEARCH
+
+    ## REFERENCES THAT WOULD BE HELPFUL FOR FURTHER RESEARCHES
     ...
 
-    */
-    And please, write the outputs thinking you are writing PPT slides. But NOT too simple. You have to write the outputs in a way that the readers can understand the contents easily.
+    # ------ Template ends ------
+
+    And please, write the outputs thinking you are writing PPT slides (something like list format). But NOT too simple. You have to write the outputs in a way that the readers can understand the contents easily.
     """
 
     # join response parts to form final response

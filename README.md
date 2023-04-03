@@ -11,6 +11,7 @@
   - [(1) Clone this repository](#1-clone-this-repository)
   - [(2) Install dependencies](#2-install-dependencies)
   - [(3) Install PaperSumGPT](#3-install-papersumgpt)
+  - [(4) For Windows users](#4-for-windows-users)
 - [Usage](#usage)
   - [(1) Run `chatgpt_wrapper` before using `papersumgpt`](#1-run-chatgpt_wrapper-before-using-papersumgpt)
   - [(2) Run `papersumgpt` to summarize the content of a paper](#2-run-papersumgpt-to-summarize-the-content-of-a-paper)
@@ -44,6 +45,73 @@ Then, you can install PaperSumGPT by running the following command:
 ```bash
 pip install .
 ```
+
+### (4) For Windows users
+Since there are no pre-built binaries for Windows, follow the instructions below to install PaperSumGPT on Windows.
+1. In the search tab, type `Turn Windows features On (Windows 기능 켜기/끄기 in Korean)`. Then, check the box of `Windows Subsystem for Linux`. 
+2. Next, reboot your computer.
+3. Now, you need to install `[Ubuntu](https://apps.microsoft.com/store/detail/ubuntu-22042-lts/9PN20MSR04DW?hl=en-us&gl=kr&rtc=1)` in your local computer.
+4. Open Ubuntu and make your UNIX accounts and passwords.
+5. For ease of use, you should install `Anaconda` by following instructions. 
+    ```
+    wget https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
+    ```
+    ```
+    bash Anaconda3-2019.10-Linux-x86_64.sh
+    ```
+    Read all the instructions with Enter and type `yes` to agree with the license.
+
+    ```
+    source ~/.bashrc
+    ```
+
+    Now, type
+    ```
+    conda activate
+    ```
+    in your terminal. If you see `(base)` in your terminal, you have successfully installed Anaconda.
+6. Install `[Xming](https://sourceforge.net/projects/xming/)`. After you installed Xming, then run `XLaunch`. You should configure your settings by clicking: 
+    - Display number: 0
+    - Multiple windows: No
+    - Clipboard: Yes
+    - Native opengl: Yes
+    - Disable access control: Yes
+    - Start no client: Yes
+
+    Then, click `Finish`. You can see `Xming` icon is running in your taskbar.
+
+7. Type the below commands in your terminal. 
+    ```
+    sudo systemd-machine-id-setup
+    ```
+    ```
+    sudo dbus-uuidgen --ensure
+    ```
+    ```
+    cat /etc/machine-id
+    ```
+    If terminal shows a long string of numbers and letters, you have successfully installed `systemd-machine-id-setup` and `dbus-uuidgen`.
+
+    Finally, you can install `x11-apps` by typing the following command:
+    ```
+    sudo apt-get install x11-apps xfonts-base xfonts-100dpi xfonts-75dpi xfonts-cyrillic
+    ```
+
+    Add the environment variable `DISPLAY` to your `.bashrc` file by typing the following command:
+    ```
+    echo "export DISPLAY=:0" >> ~/.bashrc
+    ```
+    ```
+    source ~/.bashrc
+    ```
+
+    Test your X11 GUI by typing the following command:
+    ```
+    xeyes
+    ```
+    If you see a pair of eyes, you have successfully installed X11 GUI.
+
+These are necessary (in Windows) for successfully executing `playwright` in Windows (which is essential for configuring your ChatGPT account). 
 
 ## Usage
 ### (1) Run `chatgpt_wrapper` before using `papersumgpt`
@@ -168,6 +236,8 @@ You can find `chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md` in the
 
 Open the markdown file with markdown-compatible editors. You can see the awesome result! 🎉
 (Click [here](https://github.com/wjgoarxiv/PaperSumGPT/blob/1e405324852b1c7fdfe32da369703348e0887cd6/ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md_output.md) to see the output markdown file)
+
+Note that ChatGPT sometimes makes undesired outputs. In this case, you should try a few times to get the best result. Good luck with your research! 🚀
 
 ## Dependencies
 

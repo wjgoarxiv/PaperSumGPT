@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="PaperSumGPT",
-    version="1.0.0",
+    version="1.0.1",
     author="wjgoarxiv",
     author_email="woo_go@yahoo.com",
     description="A tool to abbreviate scientific paper contents using ChatGPT",

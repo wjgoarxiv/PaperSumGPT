@@ -5,6 +5,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/release/python-380/)
 
 *PaperSumGPT is a tool for abbreviating **long scientific paper contents** using ChatGPT, designed to help researchers and students to quickly understand the key points of academic papers.*
+> **한국 분들은 [여기](README-ko_kr.md)에 있는 문서를 읽어주세요!**
 
 ## Table of Contents
 - [CAUTION: For ChatGPT free users!](#caution-for-chatgpt-free-users)
@@ -18,8 +19,6 @@
   - [(2) Run `papersumgpt` to summarize the content of a paper](#2-run-papersumgpt-to-summarize-the-content-of-a-paper)
 - [Dependencies](#dependencies)
 - [License](#license)
-
-> **한국 분들은 [여기](에 있는 문서를 읽어주세요!**
 
 ---
 ## CAUTION: For ChatGPT free users!

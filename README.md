@@ -19,6 +19,8 @@
 - [Dependencies](#dependencies)
 - [License](#license)
 
+> **한국 분들은 [여기](에 있는 문서를 읽어주세요!**
+
 ---
 ## CAUTION: For ChatGPT free users!
 > ::2023-04-03 updated::

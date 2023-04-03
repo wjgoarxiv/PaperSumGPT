@@ -50,7 +50,7 @@ pip install .
 > Since there are no pre-built binaries for Windows, follow the instructions below to install PaperSumGPT on Windows.
 > 1. In the search tab, type `Turn Windows features On (Windows 기능 켜기/끄기 in Korean)`. Then, check the box of `Windows Subsystem for Linux`. 
 > 2. Next, reboot your computer.
-> 3. Now, you need to install `[Ubuntu](https://apps.microsoft.com/store/detail/ubuntu-22042-lts/9PN20MSR04DW?hl=en-us&gl=kr&rtc=1)` in your local computer.
+> 3. Now, you need to install [Ubuntu](https://apps.microsoft.com/store/detail/ubuntu-22042-lts/9PN20MSR04DW?hl=en-us&gl=kr&rtc=1) in your local computer.
 > 4. Open Ubuntu and make your UNIX accounts and passwords.
 > 5. For ease of use, you should install `Anaconda` by following instructions. 
 >     ```
@@ -70,7 +70,7 @@ pip install .
 >     conda activate
 >     ```
 >     in your terminal. If you see `(base)` in your terminal, you have successfully installed Anaconda.
-> 6. Install `[Xming](https://sourceforge.net/projects/xming/)`. After you installed Xming, then run `XLaunch`. You should configure your settings by clicking: 
+> 6. Install [Xming](https://sourceforge.net/projects/xming/). After you installed Xming, then run `XLaunch`. You should configure your settings by clicking: 
 >     - [x] Multiple windows
 >     - [x] Multiple windows: No
 >     - [x] Clipboard: Yes

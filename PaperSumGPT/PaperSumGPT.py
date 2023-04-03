@@ -196,31 +196,32 @@ def main():
     
     ------ TEMPLATE STARTS ------
 
-    # Title
+    # **[TITLE]**
     (Bring the title from the foremost heading in the document. The powerful hint is that the title comes before the people who wrote the document.)
 
-    ## Introduction
+    ## **Introduction**
 
-    ## Methodology
-    ### 
+    ## **Methodology**
+    ### **Apparatus**
+    ### **Experimental procedure**
+    ### **Computational procedure (if exists)**
+    ### **Data analysis**
 
-    ## Results & discussion
+    ## **Results & discussion**
 
-    ## Conclusions
+    ## **Conclusions**
 
-    ## Significance of this study
+    ## **Significance of this study**
 
-    ## Things to look out for in follow-up research
+    ## **Things to look out for in follow-up research**
 
-    ### Useful references to consider 
+    ### **Useful references to consider**
     ...
 
     ------ TEMPLATE ENDS ------
 
     And please, write the outputs thinking you are writing PPT slides. But NOT too simple. You have to write the outputs in a way that the readers can understand the contents easily.
-    
     Consecutively, if possible, please find some useful references (including title and authors) from PDF or Markdown input file, and re-write them into `### Useful references to consider` subheader. 
-
     """
 
     # join response parts to form final response

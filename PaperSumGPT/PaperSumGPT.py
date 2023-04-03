@@ -192,7 +192,7 @@ def main():
             pass
 
     # define final prompt message
-    final_prompt = """Now, all the inputs are given to you. Please, abbreviate all the input contents fitting them into the following markdown format. You have to fill the contents in the markdown format. The markdown format is as follows:
+    final_prompt = """Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting into the following markdown format. The markdown format is as follows:
     
     ------ TEMPLATE STARTS ------
 

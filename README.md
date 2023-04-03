@@ -255,7 +255,7 @@ INFO: Output saved to ./chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.
 You can find `chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md` in the `ExampleRun/` folder. 
 
 Open the markdown file with markdown-compatible editors. You can see the awesome result! 🎉
-(Click [here](https://github.com/wjgoarxiv/PaperSumGPT/blob/1e405324852b1c7fdfe32da369703348e0887cd6/ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md_output.md) to see the output markdown file)
+(Click [here](ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md_output.md) to see the output markdown file)
 
 Note that ChatGPT sometimes makes undesired outputs. In this case, you should try a few times to get the best result. Good luck with your research! 🚀
 

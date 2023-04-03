@@ -7,6 +7,7 @@
 *PaperSumGPT is a tool for abbreviating **long scientific paper contents** using ChatGPT, designed to help researchers and students to quickly understand the key points of academic papers.*
 
 ## Table of Contents
+- [CAUTION: For ChatGPT free users!](#caution-for-chatgpt-free-users)
 - [How to Install](#how-to-install)
   - [(0) For Windows users (first time only!)](#0-for-windows-users-first-time-only)
   - [(1) Clone this repository](#1-clone-this-repository)
@@ -17,6 +18,15 @@
   - [(2) Run `papersumgpt` to summarize the content of a paper](#2-run-papersumgpt-to-summarize-the-content-of-a-paper)
 - [Dependencies](#dependencies)
 - [License](#license)
+
+## CAUTION: For ChatGPT free users!
+> ::2023-04-03 updated::
+
+After I tested with several accounts with ChatGPT, I found that there were __significant differences in the performance of ChatGPT__ depending whether the account is a __free user__ or __a paid user (*ChatGPT Plus*)__.
+
+If you are a free user of ChatGPT, and you have a long paper to summarize, I recommend you to (1) upgrade your account to __[ChatGPT Plus](https://openai.com/blog/chatgpt-plus)__, or (2) maximize __[the maximum length of input text](#2-run-papersumgpt-to-summarize-the-content-of-a-paper)__ upto 7000~8000 characters, to get a better performance. 
+
+Unfortunately, the free version of ChatGPT cannot understand and store the long context of the input text, which leads to a poor performance; it will export a summary that is NOT related to the input text at all, or it will export an output related to the certain part of the input text. Sorry for your inconvenience. 🙏🏻
 
 ## How to Install
 
@@ -242,7 +252,7 @@ INFO: Output saved to ./chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.
 You can find `chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md` in the `ExampleRun/` folder. 
 
 Open the markdown file with markdown-compatible editors. You can see the awesome result! 🎉
-(Click [here](https://github.com/wjgoarxiv/PaperSumGPT/blob/6a1902b6a3fee99ed20f5982370a6270cfe6a9b3/ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md_output.md) to see the output markdown file)
+(Click [here](https://github.com/wjgoarxiv/PaperSumGPT/blob/1e405324852b1c7fdfe32da369703348e0887cd6/ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md_output.md) to see the output markdown file)
 
 Note that ChatGPT sometimes makes undesired outputs. In this case, you should try a few times to get the best result. Good luck with your research! 🚀
 

@@ -230,17 +230,50 @@ def main():
     Consecutively, if possible, please find some useful references (including title and authors) from Text or Markdown input file, and re-write them into `### Useful references to consider` subheader. 
     """
 
+    # send final prompt message to ChatGPT
+    print("INFO: Tossing final prompt...")
+
     # join response parts to form final response
     final_response = response_parts[-1]
 
-    # send final prompt message to ChatGPT
-    print("INFO: Tossing final prompt...")
     success, response, message = bot.ask(final_prompt)
     if success:
         final_response = response  # Change this line
         print(f"INFO: Response from ChatGPT: {response}")
     else:
         raise RuntimeError(message)
+    
+    count_yes = 0
+    again_final_prompt_base = "I think you are not done yet. Please input the leftover contents."
+
+    # Create a variable to store the concatenated responses
+    concatenated_responses = ""
+
+    while True: 
+        user_input = input("\nINFO: Does the answer seem to be truncated? (y/n): ")
+        if user_input.strip().lower() == "y":
+            count_yes += 1 
+            print("\nINFO: Tossing final prompt again...")
+            last_response_part = response.strip().split()[-1] # Get the last word
+            again_final_prompt = f"{again_final_prompt_base}" + "\n" + "However, keep in mind that you SHOULD NOT PRINT THE TEMPLATE that I gave you now on; JUST KEEP GENERATING from the truncated part. NEVER RESTART the conversation. Thank you."
+            success, response, message = bot.ask(again_final_prompt)
+            if success: 
+                # Find the overlapping part between the last response and the new response
+                overlap_start = response.find(last_response_part)
+                if overlap_start != -1:
+                    response = response[overlap_start + len(last_response_part):]
+
+                concatenated_responses += response  # Append the response without the overlapping part to the concatenated_responses
+                print(f"INFO: Concatenated response from ChatGPT: {concatenated_responses}")
+            else:
+                raise RuntimeError(message)
+        elif user_input.strip().lower() == "n":
+            break
+        else: 
+            print("ERROR: Invalid choice. Please try again.")
+
+    # Concatenate all the response parts upto the number of times the user says yes. Direction: end to start
+    final_response = final_response + "\n" + concatenated_responses
 
     # prompt user to choose output format
     output_format = input("\nINFO Choose output format (stream / txt / md): ")
@@ -266,17 +299,16 @@ def main():
     # Export the file name as same as the input file name (`file_list[user_input-1]`)
     elif output_format.lower() == "txt":
         # write response to a text file
-        with open(file_list[user_input-1] + "_output.txt", "w") as f:
+        with open("OUTPUT.txt", "w") as f:
             f.write(final_response)
-        print("INFO: Output saved to", file_list[user_input-1])
+        print("INFO: Output saved to OUTPUT.txt")
     elif output_format.lower() == "md":
         # write response to a markdown file
-        with open(file_list[user_input-1] + "_output.md", "w") as f:
+        with open("OUTPUT.md", "w") as f:
             f.write(f"\n{final_response}\n")
-        print("INFO: Output saved to", file_list[user_input-1])
+        print("INFO: Output saved to OUTPUT.md")
     else:
         print("ERROR: Invalid output format selected. Please choose 'stream', 'txt', or 'md'.")
 
 if __name__ == "__main__":
-    main()  
-    
+    main()

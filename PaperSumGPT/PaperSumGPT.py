@@ -141,9 +141,9 @@ def main():
     # define prompt message while iterating over input parts and send them to ChatGPT
     for i, part in enumerate(input_parts):
         if i == len(input_parts) - 1:
-            prompt = f"This is the {i+1}th part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```\nThank you for providing all the inputs."
+            prompt = f"This is the ({i+1}/{len(input_parts)}) part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```\nThank you for providing all the inputs."
         else:
-            prompt = f"This is the {i+1}th part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```"
+            prompt = f"This is the ({i+1}/{len(input_parts)}) part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```"
 
         print(f"INFO: Waiting for ChatGPT to respond for {i+1}/{len(input_parts)} part(s)...")
 

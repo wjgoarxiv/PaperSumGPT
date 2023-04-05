@@ -5,6 +5,7 @@ import pyfiglet
 from tabulate import tabulate
 from chatgpt_wrapper import ChatGPT
 from chatgpt_wrapper.config import Config
+import PyPDF2
 # ------------------ Main code starts ------------------ #
 # Print the title 
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -39,6 +40,11 @@ def main():
 
     elif file_type == 2:
         file_list = glob.glob('./*.txt')
+        file_list = [file.split('\\')[-1] for file in file_list]
+        file_list.sort()
+
+    elif file_type == 3: # Hidden feature 
+        file_list = glob.glob('./*.pdf')
         file_list = [file.split('\\')[-1] for file in file_list]
         file_list.sort()
 
@@ -106,6 +112,33 @@ def main():
         exit()
     print('------------------------------------------------')
 
+    # ------------------ Convert pdf to md ------------------ #
+    # If user enters the PDF file, convert the PDF file to a markdown file.
+    # But prepared markdown would make a better result. 
+
+    def extract_text_from_pdf(pdf_file: str) -> [str]:
+        with open(pdf_file, 'rb') as pdf:
+            reader = PyPDF2.PdfReader(pdf, strict=False)
+            pdf_text = []
+
+            for page in reader.pages:
+                content = page.extract_text()
+                pdf_text.append(content)
+
+            return pdf_text
+
+    if file_type == 3:
+        print('INFO: Converting the PDF file to a markdown file...')
+        pdf_text = extract_text_from_pdf(file_list[user_input-1])
+
+        with open(file_list[user_input-1] + '_markdowned.md', 'w') as f:
+            for line in pdf_text:
+                f.write(line)
+
+        file_list[user_input-1] = file_list[user_input-1] + '_markdowned.md'
+        print('INFO: The PDF file has been converted to a markdown file.')
+        print('------------------------------------------------')
+
     # ------------------ Function starts ------------------ #
     # Load config settings
     config = Config()
@@ -141,9 +174,9 @@ def main():
     # define prompt message while iterating over input parts and send them to ChatGPT
     for i, part in enumerate(input_parts):
         if i == len(input_parts) - 1:
-            prompt = f"This is the ({i+1}/{len(input_parts)}) part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```\nThank you for providing all the inputs."
+            prompt = f"This is the {i+1}th part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```\nThank you for providing all the inputs."
         else:
-            prompt = f"This is the ({i+1}/{len(input_parts)}) part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```"
+            prompt = f"This is the {i+1}th part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```"
 
         print(f"INFO: Waiting for ChatGPT to respond for {i+1}/{len(input_parts)} part(s)...")
 
@@ -245,4 +278,5 @@ def main():
         print("ERROR: Invalid output format selected. Please choose 'stream', 'txt', or 'md'.")
 
 if __name__ == "__main__":
-    main()
+    main()  
+    

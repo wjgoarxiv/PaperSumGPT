@@ -8,7 +8,8 @@
 > **한국 분들은 [여기](README-ko_kr.md)에 있는 문서를 읽어주세요!**
 
 ## Table of Contents
-- [CAUTION: For ChatGPT free users!](#caution-for-chatgpt-free-users)
+- [CAUTION 1: For ChatGPT free users!](#caution-for-chatgpt-free-users)
+- [CAUTION 2: PDF converting functionality deprecated](#caution-2-pdf-converting-functionality-deprecated)
 - [How to Install](#how-to-install)
   - [(0) For Windows users (first time only!)](#0-for-windows-users-first-time-only)
   - [(1) Clone this repository](#1-clone-this-repository)
@@ -21,14 +22,17 @@
 - [License](#license)
 
 ---
-## CAUTION: For ChatGPT free users!
+## CAUTION 1: For ChatGPT free users!
 > ::2023-04-03 updated::
 
 After I tested with several accounts with ChatGPT, I found that there were __significant differences in the performance of ChatGPT__ depending whether the account is a __free user__ or __a paid user (*ChatGPT Plus*)__.
 
 If you are a free user of ChatGPT, and you have a long paper to summarize, I recommend you to (1) upgrade your account to __[ChatGPT Plus](https://openai.com/blog/chatgpt-plus)__, or (2) maximize __[the maximum length of input text](#2-run-papersumgpt-to-summarize-the-content-of-a-paper)__ upto 7000~8000 characters, to get a better performance. 
 
-### Unfortunately, the free version of ChatGPT cannot understand and store the long context of the input text, which leads to a poor performance; it will export a summary that is NOT related to the input text at all, or it will export an output related to the certain part of the input text. Sorry for your inconvenience. 🙏🏻
+### Unfortunately, the free version of ChatGPT cannot understand and store the long context of the input text, which leads to a poor performance; it will export a summary that is NOT related to the input text at all, or it will export an output related to the certain part of the input text.
+
+## CAUTION 2: PDF converting functionality deprecated
+Since the PDF converting functionality can be led to a poor results from ChatGPT, I have decided to __deprecate the PDF converting functionality__. Sorry for your inconvenience... 🙏🏻
 
 ---
 
@@ -170,7 +174,9 @@ ERROR: There is no file in the current directory. Please check the current direc
 ------------------------------------------------
 ```
 
-Note that you must put the paper you want to summarize in the current working directory. In this README, we will use `chatgpt-a+meta+analysis+after+2.5+months.pdf` as an example. Refer to the `ExampleRun/` folder. Copy that file to the current working directory and run `papersumgpt` again:
+Note that you must put the paper you want to summarize in the current working directory. For a demonstration, we will use `chatgpt-a+meta+analysis+after+2.5+months.txt` as an example. Refer to the `ExampleRun/` folder. A `chatgpt-a+meta+analysis+after+2.5+months.txt` file was prepared by just copying the text contents of `chatgpt-a+meta+analysis+after+2.5+months.pdf` and pasting it into a text file.
+
+Copy that file to the current working directory and run `papersumgpt` again:
 ```bash
 papersumgpt
 ```
@@ -180,18 +186,19 @@ And then, papersumgpt will ask you to choose between Markdown or PDF as the outp
 INFO: Please type the number the file type that you want to use:
 
     1. Markdown (`.md`) file
-    2. PDF (`.pdf`) file
+    2. Plain text (`.txt`) file
 
-    Note that the option 2 would convert the PDF file to a markdown file using the `PyPDF2` library.
+:
+
 ```
-Since we have `chatgpt-a+meta+analysis+after+2.5+months.pdf` in the `ExampleRun/` folder, we will choose option 2. The papersumgpt will show the list of pdf files in the current directory and ask you to choose the file you want to summarize. 
+Since we have `chatgpt-a+meta+analysis+after+2.5+months.txt` in the `ExampleRun/` folder, we will choose option 2. The papersumgpt will show the list of text files in the current directory and ask you to choose the file you want to summarize. 
 
 ```
 ------------------------------------------------
 +---------------+------------------------------------------------+
 |   File number | File name                                      |
 |---------------+------------------------------------------------|
-|             1 | ./chatgpt-a+meta+analysis+after+2.5+months.pdf |
+|             1 | ./chatgpt-a+meta+analysis+after+2.5+months.txt |
 +---------------+------------------------------------------------+
 ------------------------------------------------
 
@@ -200,7 +207,7 @@ INFO: Please select the file number or press "0" to exit:
 Then, we will choose option 1. 
 
 ```
-INFO: The file name that would be utilized is ./chatgpt-a+meta+analysis+after+2.5+months.pdf
+INFO: The file name that would be utilized is ./chatgpt-a+meta+analysis+after+2.5+months.txt
 ------------------------------------------------
 INFO: Do you want to turn on `verbose` mode? If you turn on `verbose` mode, the program will print the intermediate results. (y/n):
 ```
@@ -219,14 +226,6 @@ INFO: Please type the number the ChatGPT model that you want to use:
 Finally, we will choose the ChatGPT model that we want to use. In this case, we will choose the default model. Press `1` to choose the default model.
 
 ```
-------------------------------------------------
-INFO: Converting the PDF file to a markdown file...
-INFO: The PDF file has been converted to a markdown file.
-------------------------------------------------
-INFO: Please input the maximum length of input text (if don't know, just input 5000):
-```
-The program automatically converts the PDF file to a markdown format. Then, the program will ask you to input the maximum length of input text. In this case, we will input `5000`. 
-
 ```
 INFO: Tossing initial prompt...
 INFO: ChatGPT started abbreviating the input contents...
@@ -251,12 +250,12 @@ INFO Choose output format (stream / txt / md):
 You can choose the output format by typing `stream`, `txt`, or `md`. In this case, we will choose `md` to output the result as a markdown file.
 
 ```
-INFO: Output saved to ./chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md
+INFO: Output saved to ./chatgpt-a+meta+analysis+after+2.5+months.txt.md
 ```
-You can find `chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md` in the `ExampleRun/` folder. 
+You can find `chatgpt-a+meta+analysis+after+2.5+months.txt.md` in the `ExampleRun/` folder. 
 
 Open the markdown file with markdown-compatible editors. You can see the awesome result! 🎉
-(Click [here](ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md_output.md) to see the output markdown file)
+(Click [here](ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.txt.md_output.md) to see the output markdown file)
 
 Note that ChatGPT sometimes makes undesired outputs. In this case, you should try a few times to get the best result. Good luck with your research! 🚀
 
@@ -264,7 +263,6 @@ Note that ChatGPT sometimes makes undesired outputs. In this case, you should tr
 
 - [pyfiglet](https://pypi.org/project/pyfiglet/) - For generating ASCII art of the project name.
 - [tabulate](https://pypi.org/project/tabulate/) - For creating clean and readable tables for the output.
-- [PyPDF2](https://pypi.org/project/PyPDF2/) - For reading and processing PDF files.
 - [chatgpt_wrapper](https://github.com/mmabrouk/chatgpt-wrapper) - An useful open-source unofficial Power CLI, Python API and Flask API that lets us interact programmatically with ChatGPT/GPT4. 
 
 ## License

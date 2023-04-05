@@ -225,8 +225,7 @@ INFO: Please type the number the ChatGPT model that you want to use:
 ```
 Finally, we will choose the ChatGPT model that we want to use. In this case, we will choose the default model. Press `1` to choose the default model.
 
-```
-```
+```text
 INFO: Tossing initial prompt...
 INFO: ChatGPT started abbreviating the input contents...
 INFO: Waiting for ChatGPT to respond for 1/11 part(s)...

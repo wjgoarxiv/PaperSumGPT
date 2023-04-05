@@ -27,7 +27,7 @@
 
 After I tested with several accounts with ChatGPT, I found that there were __significant differences in the performance of ChatGPT__ depending whether the account is a __free user__ or __a paid user (*ChatGPT Plus*)__.
 
-If you are a free user of ChatGPT, and you have a long paper to summarize, I recommend you to (1) upgrade your account to __[ChatGPT Plus](https://openai.com/blog/chatgpt-plus)__, or (2) maximize __[the maximum length of input text](#2-run-papersumgpt-to-summarize-the-content-of-a-paper)__ upto 7000~8000 characters, to get a better performance. 
+If you are a free user of ChatGPT, and you have a long paper to summarize, I recommend you to upgrade your account to __[ChatGPT Plus](https://openai.com/blog/chatgpt-plus)__ to get a better performance. 
 
 ### Unfortunately, the free version of ChatGPT cannot understand and store the long context of the input text, which leads to a poor performance; it will export a summary that is NOT related to the input text at all, or it will export an output related to the certain part of the input text.
 

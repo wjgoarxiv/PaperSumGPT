@@ -5,8 +5,6 @@ import pyfiglet
 from tabulate import tabulate
 from chatgpt_wrapper import ChatGPT
 from chatgpt_wrapper.config import Config
-import PyPDF2
-
 # ------------------ Main code starts ------------------ #
 # Print the title 
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -22,14 +20,14 @@ print('\nVisit https://github.com/wjgoarxiv/papersumgpt for more information.')
 print('------------------------------------------------')
 
 def main():
-    # Ask user if the brought input file is a markdown file or PDF file 
+    # Ask user if the brought input file is a markdown file or plain text file 
     print('\n')
     file_type = int(input("""INFO: Please type the number the file type that you want to use:
 
     1. Markdown (`.md`) file
-    2. PDF (`.pdf`) file
+    2. Plain text (`.txt`) file
 
-    Note that the option 2 would convert the PDF file to a markdown file using the `PyPDF2` package: """))
+    : """))
     print('\n')
     print('------------------------------------------------')
 
@@ -40,7 +38,7 @@ def main():
         file_list.sort()
 
     elif file_type == 2:
-        file_list = glob.glob('./*.pdf')
+        file_list = glob.glob('./*.txt')
         file_list = [file.split('\\')[-1] for file in file_list]
         file_list.sort()
 
@@ -108,31 +106,6 @@ def main():
         exit()
     print('------------------------------------------------')
 
-    # ------------------ Convert pdf to md ------------------ #
-
-    def extract_text_from_pdf(pdf_file: str) -> [str]:
-        with open(pdf_file, 'rb') as pdf:
-            reader = PyPDF2.PdfReader(pdf, strict=False)
-            pdf_text = []
-
-            for page in reader.pages:
-                content = page.extract_text()
-                pdf_text.append(content)
-
-            return pdf_text
-        
-    if file_type == 2:
-        print('INFO: Converting the PDF file to a markdown file...')
-        pdf_text = extract_text_from_pdf(file_list[user_input-1])
-
-        with open(file_list[user_input-1] + '_markdowned.md', 'w') as f:
-            for line in pdf_text:
-                f.write(line)
-
-        file_list[user_input-1] = file_list[user_input-1] + '_markdowned.md'
-        print('INFO: The PDF file has been converted to a markdown file.')
-        print('------------------------------------------------')
-
     # ------------------ Function starts ------------------ #
     # Load config settings
     config = Config()
@@ -146,7 +119,7 @@ def main():
         input_text = f.read()
 
     # Ask user maximum length of input text (if don't know, just input 3000)
-    max_length = int(input("INFO: Please input the maximum length of input text (if don't know, just input 5000): "))
+    max_length = 7000
 
     # truncate input text into smaller parts
     input_parts = [input_text[i:i+max_length] for i in range(0, len(input_text), max_length)]
@@ -221,7 +194,7 @@ def main():
     ------ TEMPLATE ENDS ------
 
     And please, write the outputs thinking you are writing PPT slides. But NOT too simple. You have to write the outputs in a way that the readers can understand the contents easily.
-    Consecutively, if possible, please find some useful references (including title and authors) from PDF or Markdown input file, and re-write them into `### Useful references to consider` subheader. 
+    Consecutively, if possible, please find some useful references (including title and authors) from Text or Markdown input file, and re-write them into `### Useful references to consider` subheader. 
     """
 
     # join response parts to form final response

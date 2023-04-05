@@ -244,12 +244,12 @@ While we are waiting, I have to mention that all these steps are synchronized wi
 
 After the abbreviation process is finished, the program will show the following message:
 
-```
+```text
 INFO Choose output format (stream / txt / md):
 ```
 You can choose the output format by typing `stream`, `txt`, or `md`. In this case, we will choose `md` to output the result as a markdown file.
 
-```
+```text
 INFO: Output saved to ./chatgpt-a+meta+analysis+after+2.5+months.txt.md
 ```
 You can find `chatgpt-a+meta+analysis+after+2.5+months.txt.md` in the `ExampleRun/` folder. 

@@ -255,7 +255,7 @@ INFO: Output saved to ./chatgpt-a+meta+analysis+after+2.5+months.txt.md
 You can find `chatgpt-a+meta+analysis+after+2.5+months.txt.md` in the `ExampleRun/` folder. 
 
 Open the markdown file with markdown-compatible editors. You can see the awesome result! 🎉
-(Click [here](ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.txt.md_output.md) to see the output markdown file)
+(Click [here](ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.txt_output.md) to see the output markdown file)
 
 Note that ChatGPT sometimes makes undesired outputs. In this case, you should try a few times to get the best result. Good luck with your research! 🚀
 

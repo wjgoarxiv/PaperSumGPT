@@ -181,12 +181,13 @@ Copy that file to the current working directory and run `papersumgpt` again:
 papersumgpt
 ```
 
-And then, papersumgpt will ask you to choose between Markdown or PDF as the output format.
+And then, papersumgpt will ask you to choose between `Markdown` or `PDF` as the output format.
 ```
 INFO: Please type the number the file type that you want to use:
 
     1. Markdown (`.md`) file
     2. Plain text (`.txt`) file
+    3. PDF (`.pdf`) file
 
 :
 

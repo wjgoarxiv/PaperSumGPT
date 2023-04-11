@@ -9,7 +9,7 @@
 
 ## Table of Contents
 - [NOTE 1: For ChatGPT free users!](#note-1-for-chatgpt-free-users)
-- [NOTE 2: PDF converting functionality deprecated](#note-2-pdf-converting-functionality-deprecated)
+- [NOTE 2: PDF converting functionality revitalized](#note-2-pdf-converting-functionality-revitalized)
 - [How to Install](#how-to-install)
   - [(0) For Windows users (first time only!)](#0-for-windows-users-first-time-only)
   - [(1) Clone this repository](#1-clone-this-repository)

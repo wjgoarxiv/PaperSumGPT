@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="PaperSumGPT",
-    version="1.0.1",
+    version="1.1.0",
     author="wjgoarxiv",
     author_email="woo_go@yahoo.com",
     description="A tool to abbreviate scientific paper contents using ChatGPT",
@@ -16,6 +16,12 @@ setup(
         "pyfiglet",
         "tabulate",
         "PyPDF2"
+        "fitz",
+        "pdf2image",
+        "pytesseract",
+        "frontend",
+        "opencv-contrib-python",
+        "pillow",
     ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",

@@ -2,10 +2,17 @@
 import os
 import glob
 import pyfiglet
+import numpy as np
 from tabulate import tabulate
 from chatgpt_wrapper import ChatGPT
 from chatgpt_wrapper.config import Config
-import PyPDF2
+
+# Manipulating PDF
+import cv2
+import pytesseract as tess
+from pdf2image import convert_from_path
+from PIL import Image
+
 # ------------------ Main code starts ------------------ #
 # Print the title 
 os.system('cls' if os.name == 'nt' else 'clear')
@@ -27,6 +34,7 @@ def main():
 
     1. Markdown (`.md`) file
     2. Plain text (`.txt`) file
+    3. PDF (`.pdf`) file
 
     : """))
     print('\n')
@@ -43,7 +51,7 @@ def main():
         file_list = [file.split('\\')[-1] for file in file_list]
         file_list.sort()
 
-    elif file_type == 3: # Hidden feature 
+    elif file_type == 3:
         file_list = glob.glob('./*.pdf')
         file_list = [file.split('\\')[-1] for file in file_list]
         file_list.sort()
@@ -112,26 +120,49 @@ def main():
         exit()
     print('------------------------------------------------')
 
-    # ------------------ Convert pdf to md ------------------ #
-    # If user enters the PDF file, convert the PDF file to a markdown file.
-    # But prepared markdown would make a better result. 
+    # ------------------ Convert pdf to markdown ------------------ #
+    # This process requires following processes: 
+    # 1. Convert pdf to images
+    # 2. Perform OCR
+    # 3. Convert the images to a markdown file 
 
-    def extract_text_from_pdf(pdf_file: str) -> [str]:
-        with open(pdf_file, 'rb') as pdf:
-            reader = PyPDF2.PdfReader(pdf, strict=False)
-            pdf_text = []
+    def pdf_to_images(pdf_file):
+        return convert_from_path(pdf_file)
+    
+    def process_image(image):
+        # Convert PIL image to OpenCV image
+        original_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+        gray_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2GRAY)
+        _, threshold_image = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 
-            for page in reader.pages:
-                content = page.extract_text()
-                pdf_text.append(content)
+        rectangular_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11))
+        dilated_image = cv2.dilate(threshold_image, rectangular_kernel, iterations=1)
 
-            return pdf_text
+        contours, hierarchy = cv2.findContours(dilated_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        copied_image = original_image.copy()
 
+        ocr_text = ""
+
+        for cnt in contours:
+            x, y, w, h = cv2.boundingRect(cnt)
+            cropped = copied_image[y:y + h, x:x + w]
+            text = tess.image_to_string(cropped, config='--oem 3 --psm 1')
+            ocr_text += text
+
+        return ocr_text
+    
+    def perform_ocr(images):
+        ocr_text = ""
+        for i, image in enumerate(images):
+            text = process_image(image)
+            ocr_text += f"Page {i+1}:\n{text}\n\n"
+        return ocr_text
+    
     if file_type == 3:
         print('INFO: Converting the PDF file to a markdown file...')
-        pdf_text = extract_text_from_pdf(file_list[user_input-1])
+        pdf_text = perform_ocr(pdf_to_images(file_list[user_input-1]))
 
-        with open(file_list[user_input-1] + '_markdowned.md', 'w') as f:
+        with open(file_list[user_input-1] + '_markdowned.md', 'w', encoding='utf-8') as f:
             for line in pdf_text:
                 f.write(line)
 

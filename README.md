@@ -8,8 +8,8 @@
 > **한국 분들은 [여기](README-ko_kr.md)에 있는 문서를 읽어주세요!**
 
 ## Table of Contents
-- [CAUTION 1: For ChatGPT free users!](#caution-for-chatgpt-free-users)
-- [CAUTION 2: PDF converting functionality deprecated](#caution-2-pdf-converting-functionality-deprecated)
+- [NOTE 1: For ChatGPT free users!](#caution-for-chatgpt-free-users)
+- [NOTE 2: PDF converting functionality deprecated](#caution-2-pdf-converting-functionality-deprecated)
 - [How to Install](#how-to-install)
   - [(0) For Windows users (first time only!)](#0-for-windows-users-first-time-only)
   - [(1) Clone this repository](#1-clone-this-repository)

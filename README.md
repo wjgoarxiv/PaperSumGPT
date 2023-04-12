@@ -10,6 +10,7 @@
 ## Table of Contents
 - [NOTE 1: For ChatGPT free users!](#note-1-for-chatgpt-free-users)
 - [NOTE 2: PDF converting functionality revitalized](#note-2-pdf-converting-functionality-revitalized)
+- [NOTE 3: ANSI escape sequences updated!](#note-3-ansi-escape-sequences-updated)
 - [How to Install](#how-to-install)
   - [(0) For Windows users (first time only!)](#0-for-windows-users-first-time-only)
   - [(1) Clone this repository](#1-clone-this-repository)
@@ -33,6 +34,11 @@ If you are a free user of ChatGPT, and you have a long paper to summarize, I rec
 
 ## NOTE 2: PDF converting functionality revitalized!
 Using the OpenCV and PyTesseract libraries, I've enhanced the PDF conversion functionality. You can now choose `option 3` in the file type selection!
+
+## NOTE 3: ANSI escape sequences updated!
+> ::2023-04-12 updated:: 
+
+ANSI escape sequences are now updated to support the rich text formatting of the messages in the terminal. Important notices and warnings are now highlighted in bolded red font. 
 
 ---
 
@@ -229,13 +235,7 @@ Finally, we will choose the ChatGPT model that we want to use. In this case, we 
 ```text
 INFO: Tossing initial prompt...
 INFO: ChatGPT started abbreviating the input contents...
-INFO: Waiting for ChatGPT to respond for 1/11 part(s)...
-INFO: 1/11 part(s) tossed to ChatGPT.
-INFO: Waiting for ChatGPT to respond for 2/11 part(s)...
-INFO: 2/11 part(s) tossed to ChatGPT.
-INFO: Waiting for ChatGPT to respond for 3/11 part(s)...
-INFO: 3/11 part(s) tossed to ChatGPT.
-INFO: Waiting for ChatGPT to respond for 4/11 part(s)...
+INFO: Progressing... (3/11) 
 ...
 ```
 The tool will process the content summary of the paper and make an output file in the same directory as the input file. Let's wait for a while! ☕️

@@ -23,19 +23,21 @@
 - [License](#license)
 
 ---
-## NOTE 1: For ChatGPT free users!
+## 🗞️ NOTE 1: For ChatGPT free users!
 > ::2023-04-03 updated::
 
 After I tested with several accounts with ChatGPT, I found that there were __significant differences in the performance of ChatGPT__ depending whether the account is a __free user__ or __a paid user (*ChatGPT Plus*)__.
 
 If you are a free user of ChatGPT, and you have a long paper to summarize, I recommend you to upgrade your account to __[ChatGPT Plus](https://openai.com/blog/chatgpt-plus)__ to get a better performance. 
 
-### Unfortunately, the free version of ChatGPT cannot understand and store the long context of the input text, which leads to a poor performance; it will export a summary that is NOT related to the input text at all, or it will export an output related to the certain part of the input text.
+Unfortunately, the free version of ChatGPT cannot understand and store the long context of the input text, which leads to a poor performance; it will export a summary that is NOT related to the input text at all, or it will export an output related to the certain part of the input text.
 
-## NOTE 2: PDF converting functionality revitalized!
+## 🗞️ NOTE 2: PDF converting functionality revitalized!
+> ::2023-04-11 updated::
+
 Using the OpenCV and PyTesseract libraries, I've enhanced the PDF conversion functionality. You can now choose `option 3` in the file type selection!
 
-## NOTE 3: ANSI escape sequences updated!
+## 🗞️ NOTE 3: ANSI escape sequences updated!
 > ::2023-04-12 updated:: 
 
 ANSI escape sequences are now updated to support the rich text formatting of the messages in the terminal. Important notices and warnings are now highlighted in bolded red font. 

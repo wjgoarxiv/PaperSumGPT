@@ -365,7 +365,7 @@ def main():
                 if user_input.strip().lower() == "quit":
                     break
                 else: 
-                    print("\033[31;1;mERROR: Invalid choice. Quitting...\033[0m")]")
+                    print("\033[31;1;mERROR: Invalid choice. Quitting...\033[0m")
 
     # Export the file name as same as the input file name (`file_list[user_input-1]`)
     elif output_format.lower() == "txt":

@@ -2,7 +2,7 @@
 <a href="https://www.buymeacoffee.com/woojingo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 120px !important;" ></a>
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/release/python-380/)
+[![Python 3.7+](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/downloads/release/python-370/)
 
 *PaperSumGPT는 ChatGPT를 사용하여 **긴 과학 논문 내용**을 줄여주는 도구입니다. 연구자와 학생분들이 학술 논문의 요점을 빠르게 이해할 수 있기를 기원합니다!*
 
@@ -28,6 +28,13 @@ ChatGPT를 여러 계정으로 테스트한 결과 계정이 **무료 사용자*
 따라서, 만약 여러분이 ChatGPT 무료사용자이며, 요약해야 할 논문이 길다면 (1) 계정을 __[ChatGPT 플러스](https://openai.com/blog/chatgpt-plus)__, 또는 (2) __[입력 텍스트의 최대 길이](#2-run-run-inputumpt-to-the-the-paper-to-the-the-the-the-paper-to-the-paper)__ 를 최대 `7,000~8,000자` 까지 입력해보시길 권장드립니다. 
 
 ### 안타깝게도 현재 ChatGPT의 무료 버전은 입력 텍스트의 긴 컨텍스트를 이해하고 잘 저장하지 못하므로, 성공적인 결과를 기대하기가 어렵습니다. 예를 들어, 입력 텍스트와 전혀 관련이 없는 요약을 내보낸다든지, 입력 텍스트의 특정 부분만 고려한 출력을 내보내고는 합니다. 
+
+## 🗞pdf NOTE 2: PDF 변환 기능 재활성화
+> ::2023-04-11 업데이트::
+> 
+OpenCV 및 PyTesseract 라이브러리를 사용하여 PDF 변환 기능을 향상시켰습니다. 이제 파일 형식 선택에서 '옵션 3'을 선택할 수 있습니다.
+그러나, 더 나은 결과를 위해선 직접 정돈한 `.md` 및 `.txt` 파일을 사용하는 것이 효과적입니다. OCR이 아무리 잘 되어도 오타나 이상한 문자들이 포함될 수 있기 때문입니다.
+PDF 선택은 편의를 위해서만 사용하세요.
 
 ---
 

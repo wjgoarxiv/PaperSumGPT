@@ -234,9 +234,10 @@ def main():
     # define prompt message while iterating over input parts and send them to ChatGPT
     for i, part in enumerate(input_parts):
         if i == len(input_parts) - 1:
-            prompt = f"This is the {i+1}th part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```\nThank you for providing all the inputs."
+            # {i+1} / {len(input_parts)} is for the last part of the input contents
+            prompt = f"This is the ({i+1} / {len(input_parts)}) part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```\nThank you for taking all the inputs."
         else:
-            prompt = f"This is the {i+1}th part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```"
+            prompt = f"This is the ({i+1} / {len(input_parts)}) part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```"
 
         formatted_progressing = f"\033[31;1;mINFO: Progressing... ({i+1}/{len(input_parts)})\033[0m"
         stop_event_2 = threading.Event()
@@ -262,7 +263,7 @@ def main():
         spinner_2.join()
 
     # define final prompt message
-    final_prompt = """Now, all the inputs are given to you. You should co   mbine and abbreviate all the inputs by fitting into the following markdown format. The markdown format is as follows:
+    final_prompt = """Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following markdown format. The markdown format is as follows:
     
     ------ TEMPLATE STARTS ------
 
@@ -289,9 +290,25 @@ def main():
     ...
 
     ------ TEMPLATE ENDS ------
+    You have to write the outputs in a way that the readers can understand the contents easily. Don't forget to miss any important information from inputs. Detailed things that should be noticed would be included in the output (if possible, please bold them with `__BOLD__` or `**BOLD**` markdown marking for clear visibility). Consecutively, if possible, please find some useful references (including title and authors) from the Text or Markdown input file, and re-write them into `### Useful references to consider` subheader. 
+    Sort all these things into TABLE format; which will be efficient to understand what is what. Something like this:
 
-    And please, write the outputs thinking you are writing PPT slides. But NOT too simple. You have to write the outputs in a way that the readers can understand the contents easily.
-    Consecutively, if possible, please find some useful references (including title and authors) from Text or Markdown input file, and re-write them into `### Useful references to consider` subheader. 
+    ```markdown 
+    | Sections | Abbreviated contents | 
+    | :----: | :----: |
+    | __Title__ | [TITLE] |
+    | __Introduction__ | [INTRODUCTION] |
+    | __Methodology__ | [METHODOLOGY] | 
+    | __Experimental procedure__ | [EXPERIMENTAL PROCEDURE] |
+    | __Computational procedure__ | [COMPUTATIONAL PROCEDURE] | 
+    | __Data analysis__ | [DATA ANALYSIS] | 
+    | __Results & discussion__ | [RESULTS & DISCUSSION] |
+    | __Conclusions__ | [CONCLUSIONS] |
+    | __Significance of this study__ | [SIGNIFICANCE OF THIS STUDY] | 
+    | __Things to look out for in follow-up research__ | [THINGS TO LOOK OUT FOR IN FOLLOW-UP RESEARCH] | 
+    | __Useful references to consider__ | [USEFUL REFERENCES TO CONSIDER] |
+    ```
+
     """
 
     # send final prompt message to ChatGPT

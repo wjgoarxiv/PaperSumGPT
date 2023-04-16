@@ -5,7 +5,7 @@
 [![Python 3.7+](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/downloads/release/python-370/)
 
 *PaperSumGPT is a tool for abbreviating **long scientific paper contents** using ChatGPT, designed to help researchers and students to quickly understand the key points of academic papers.*
-> **[🇰🇷 한글 설명서](README-ko_kr.md)**
+> **한국 분들은 [여기](README-ko_kr.md)에 있는 문서를 읽어주세요!**
 
 ## Table of Contents
 - [NOTE 1: For ChatGPT free users!](#note-1-for-chatgpt-free-users)
@@ -259,7 +259,12 @@ You can find `chatgpt-a+meta+analysis+after+2.5+months.txt.md` in the `ExampleRu
 Open the markdown file with markdown-compatible editors. You can see the awesome result! 🎉
 (Click [here](ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.txt_output.md) to see the output markdown file)
 
-Note that ChatGPT sometimes makes undesired outputs. In this case, you should try a few times to get the best result. Good luck with your research! 🚀
+> ### Output format has been more improved!
+> ::2023-04-16 updated::
+> Now, the abbreviation result is more improved! Since the prompt has been more enhanced, the abbreviation output is more excellent. You can see the output contents as __table__ format. The table format is more readable and clean. I've also added the updated version of output markdown file in the `ExampleRun/` folder. You can check that. 🍾
+
+> ### NOTES
+> Note that ChatGPT sometimes makes undesired outputs. In this case, you should try a few times to get the best result. Good luck with your research! 🚀
 
 ## Dependencies
 

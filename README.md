@@ -260,7 +260,7 @@ Open the markdown file with markdown-compatible editors. You can see the awesome
 (Click [here](ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.txt_output.md) to see the output markdown file)
 
 > ### **Output format has been more improved!**
-> ::2023-04-16 updated::
+> ::2023-04-16 updated:: <br/>
 > Now, the abbreviation result is more improved! Since the prompt has been more enhanced, the abbreviation output is more excellent. You can see the output contents as __table__ format. The table format is more readable and clean. I've also added the updated version of output markdown file in the `ExampleRun/` folder. You can check [here](ExampleRun/[NEW] chatgpt-a+meta+analysis+after+2.5+months_output.md)! 🍾
 >
 > #### **Output preview**

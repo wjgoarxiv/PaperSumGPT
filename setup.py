@@ -18,7 +18,7 @@ setup(
         "fitz",
         "pdf2image",
         "pytesseract",
-        # "frontend",
+        "frontend",
         "opencv-contrib-python",
         "pillow",
     ],

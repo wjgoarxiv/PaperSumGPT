@@ -18,7 +18,7 @@ setup(
         "fitz",
         "pdf2image",
         "pytesseract",
-        "frontend",
+        # "frontend",
         "opencv-contrib-python",
         "pillow",
     ],
@@ -33,7 +33,7 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.7',
     packages=['PaperSumGPT'],
     entry_points={
         'console_scripts': [

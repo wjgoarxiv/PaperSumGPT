@@ -192,11 +192,10 @@ papersumgpt
 INFO: Please type the number the file type that you want to use:
 
     1. Markdown (`.md`) file
-    2. PDF (`.pdf`) file
-
-    Note that the option 2 would convert the PDF file to a markdown file using the `PyPDF2` library.
+    2. Plain text (`.txt`) file
+    3. PDF (`.pdf`) file
 ```
-PDF 파일을 사용할 것이므로, 2번을 선택해줍니다.
+PDF 파일을 사용할 것이므로, 3번을 선택해줍니다.
 
 ```
 ------------------------------------------------

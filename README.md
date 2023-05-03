@@ -7,6 +7,8 @@
 *PaperSumGPT is a tool for abbreviating **long scientific paper contents** using ChatGPT, designed to help researchers and students to quickly understand the key points of academic papers.*
 > **한국 분들은 [여기](README-ko_kr.md)에 있는 문서를 읽어주세요!**
 
+<img src="demorun.gif" width="70%">
+
 ## Table of Contents
 - [NOTE 1: For ChatGPT free users!](#note-1-for-chatgpt-free-users)
 - [NOTE 2: PDF converting functionality revitalized](#note-2-pdf-converting-functionality-revitalized)

@@ -15,7 +15,7 @@ setup(
     install_requires=[
         "pyfiglet",
         "tabulate",
-        "fitz",
+        "PyMuPDF",
         "pdf2image",
         "pytesseract",
         "frontend",

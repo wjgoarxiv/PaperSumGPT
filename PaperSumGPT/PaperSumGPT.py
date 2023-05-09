@@ -145,6 +145,7 @@ def main():
     # 3. Convert the images to a markdown file 
 
     def pdf_to_images(pdf_file):
+        os.environ["PATH"] += os.pathsep + r"{'path'}\poppler-21.11.0\Library\bin"
         return convert_from_path(pdf_file, 500)
     
     def process_image(image):

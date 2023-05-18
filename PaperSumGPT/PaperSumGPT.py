@@ -352,7 +352,7 @@ def main():
 
     # Ask the user to select the form of the final prompt
     while True:
-        user_input = input("\n\033[31;1;mINFO: Which output format do you prefer? (table / markdown) \033[0m")
+        user_input = input("\n\033[31;1;mINFO: Which output format do you prefer? (table / markdown): \033[0m")
         if user_input.strip() == "table":
             final_prompt = final_prompt_1
             break

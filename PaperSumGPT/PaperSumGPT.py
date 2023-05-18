@@ -263,8 +263,8 @@ def main():
         stop_event_2.set()
         spinner_2.join()
 
-    # define final prompt message
-    final_prompt = """Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following markdown format. The markdown format is as follows:
+    # Make a user to select one of the final prompts (final_prompt_1 = table form, final_prompt_2 = abbreviated form)
+    final_prompt_1 = """Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following markdown format. The markdown format is as follows:
     
     ------ TEMPLATE STARTS ------
 
@@ -312,6 +312,33 @@ def main():
 
     """
 
+    final_prompt_2 = """Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following format. Note that you have to write the outputs __assuming you are making a paper sharing powerpoint presentation (ppt) for the audience__. You have to make audiences understand the content and methodology of this paper very well. Therefore, clearly abbreviate and express the important information only. Thank you for your consideration.
+    
+    ```markdown
+    # **[TITLE]**
+    (Bring the title from the foremost heading in the document. The powerful hint is that the title comes before the people who wrote the document.)
+
+    ## **Introduction**
+
+    ## **Methodology**
+    ### **Apparatus**
+    ### **Experimental procedure**
+    ### **Computational procedure (if exists)**
+    ### **Data analysis**
+
+    ## **Results & discussion**
+
+    ## **Conclusions**
+
+    ## **Significance of this study**
+
+    ## **Things to look out for in follow-up research**
+
+    ### **Useful references to consider**
+    ...
+    ```
+    """
+
     # send final prompt message to ChatGPT
     print("\033[31;1;mINFO: Tossing final prompt...\033[0m")
 
@@ -323,7 +350,26 @@ def main():
         print("\033[31;1;mERROR: List index out of range. Exiting...\033[0m")
         sys.exit(1)
 
-    success, response, message = bot.ask(final_prompt)
+    # Ask the user to select the form of the final prompt
+    while True:
+        user_input = input("\n\033[31;1;mINFO: Which output format do you prefer? (table / markdown) \033[0m")
+        if user_input.strip() == "table":
+            final_prompt = final_prompt_1
+            break
+        elif user_input.strip() == "markdown":
+            final_prompt = final_prompt_2
+            break
+        else:
+            print("\033[31;1;mERROR: Invalid input. Please try again.\033[0m")
+            continue
+
+    # Send the final prompt to ChatGPT
+    if user_input.strip() == "table":
+        success, response, message = bot.ask(final_prompt_1)
+
+    elif user_input.strip() == "markdown":
+        success, response, message = bot.ask(final_prompt_2)
+
     if success:
         final_response = response  # Change this line
         print(f"INFO: Response from ChatGPT: {response}")

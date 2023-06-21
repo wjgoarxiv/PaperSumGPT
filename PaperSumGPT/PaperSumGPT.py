@@ -52,7 +52,8 @@ def main():
 
     1. Markdown (`.md`) file
     2. Plain text (`.txt`) file
-    3. PDF (`.pdf`) file
+
+    NOTE: I recommend you other websites that convert PDF to text files in case you want to use PDF files as input files.
 
     : """))
     print('\n')
@@ -66,11 +67,6 @@ def main():
 
     elif file_type == 2:
         file_list = glob.glob('./*.txt')
-        file_list = [file.split('\\')[-1] for file in file_list]
-        file_list.sort()
-
-    elif file_type == 3:
-        file_list = glob.glob('./*.pdf')
         file_list = [file.split('\\')[-1] for file in file_list]
         file_list.sort()
 
@@ -117,88 +113,7 @@ def main():
     print('------------------------------------------------')
 
     # Ask user their desired ChatGPT model
-    chatgpt_model = input("""\033[31;1;mINFO: Please type the number the ChatGPT model that you want to use: \033[0m
-
-    1. default (Turbo version for ChatGPT Plus users and default version for free users)
-    2. gpt4 (Only available for ChatGPT Plus users; a little bit slower than the default model)
-    3. legacy (Only available for ChatGPT Plus users; an older version of the default model)
-
-    Note that the option 2 and 3 are NOT available for free users. If you are the free user, please select the option 1.
-    """)
-                        
-    if chatgpt_model == '1':
-        chatgpt_model = 'default'
-    elif chatgpt_model == '2':
-        chatgpt_model = 'gpt4'
-    elif chatgpt_model == '3':
-        chatgpt_model = 'legacy'
-    else:
-        print("\033[31;1;mERROR: Your input number is out of range. Please check the file number.\033[0m")
-        print("\033[31;1;mERROR: The program will stop.\033[31;1;m")
-        exit()
-    print('------------------------------------------------')
-
-    # ------------------ Convert pdf to markdown ------------------ #
-    # This process requires following processes: 
-    # 1. Convert pdf to images
-    # 2. Perform OCR
-    # 3. Convert the images to a markdown file 
-
-    def pdf_to_images(pdf_file):
-        os.environ["PATH"] += os.pathsep + r"{'path'}\poppler-21.11.0\Library\bin"
-        return convert_from_path(pdf_file, 500)
-    
-    def process_image(image):
-        # Convert PIL image to OpenCV image
-        original_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-        gray_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2GRAY)
-        _, threshold_image = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-
-        rectangular_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11))
-        dilated_image = cv2.dilate(threshold_image, rectangular_kernel, iterations=1)
-
-        contours, hierarchy = cv2.findContours(dilated_image, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        copied_image = original_image.copy()
-
-        ocr_text = ""
-
-        for cnt in contours:
-            x, y, w, h = cv2.boundingRect(cnt)
-            cropped = copied_image[y:y + h, x:x + w]
-            text = tess.image_to_string(cropped, config='--oem 3 --psm 1')
-            ocr_text += text
-
-        return ocr_text
-    
-    def perform_ocr(images):
-        ocr_text = ""
-        for i, image in enumerate(images):
-            text = process_image(image)
-            ocr_text += f"Page {i+1}:\n{text}\n\n"
-        return ocr_text
-    
-    if file_type == 3:
-        formatted_message = '\033[31;1;mINFO: Converting the PDF file to a markdown file...\033[0m'
-
-        stop_event = threading.Event()
-        spinner = threading.Thread(target=spinning_wheel, args=(formatted_message, stop_event))
-        spinner.daemon = True
-        spinner.start()
-
-        pdf_text = perform_ocr(pdf_to_images(file_list[user_input-1]))
-
-        with open(file_list[user_input-1] + '_markdowned.md', 'w', encoding='utf-8') as f:
-            for line in pdf_text:
-                f.write(line)
-
-        file_list[user_input-1] = file_list[user_input-1] + '_markdowned.md'
-
-        # ends the spinning wheel with stop_event.set()
-        stop_event.set()
-        spinner.join()
-
-        print('\033[31;1;mINFO: The PDF file has been converted to a markdown file.\033[0m')
-        print('------------------------------------------------')
+    chatgpt_model = 'default' 
 
     # ------------------ Function starts ------------------ #
     # Load config settings
@@ -209,8 +124,14 @@ def main():
     bot = ChatGPT(config)
 
     # read input file
-    with open(file_list[user_input-1], 'r') as f:
-        input_text = f.read()
+
+    try:
+        with open(file_list[user_input-1], 'r', encoding="utf-8") as f:
+            input_text = f.read()
+    except: 
+        print("\033[31;1;mERROR: The file is not readable. Please check the file.\033[0m")
+        print("\033[31;1;mERROR: The program will stop.\033[0m")
+        exit()
 
     # Ask user maximum length of input text (if don't know, just input 3000)
     max_length = 7000
@@ -224,12 +145,13 @@ def main():
     # send initial prompt message to ChatGPT
     print("\033[31;1;mINFO: Tossing initial prompt...\033[0m")
     success, response, message = bot.ask(initial_prompt)
+
     if success:
         print(f"\033[31;1;mINFO: ChatGPT started abbreviating the input contents...\033[0m")
     else:
-        raise RuntimeError(message)
+        print(f"\033[31;1;mERROR: {message}\033[0m")
 
-    # initialize response list
+# initialize response list
     response_parts = []
 
     # define prompt message while iterating over input parts and send them to ChatGPT
@@ -251,7 +173,7 @@ def main():
         if success:
             response_parts.append(response)
         else:
-            raise RuntimeError(message)
+            print(f"\033[31;1;mERROR: {message}\033[0m")
 
         # Handling the `verbose` mode 
         if verbose == True:
@@ -376,38 +298,6 @@ def main():
     else:
         raise RuntimeError(message)
     
-    count_yes = 0
-    again_final_prompt_base = "I think you are not done yet. Please input the leftover contents."
-
-    # Create a variable to store the concatenated responses
-    concatenated_responses = ""
-
-    while True: 
-        user_input = input("\n\033[31;1;mINFO: Does the answer seem to be truncated? (y/n): \033[0m")
-        if user_input.strip().lower() == "y":
-            count_yes += 1 
-            print("\n\033[31;1;mINFO: Tossing final prompt again...\033[0m")
-            last_response_part = response.strip().split()[-1] # Get the last word
-            again_final_prompt = f"{again_final_prompt_base}" + "\n" + "However, keep in mind that you SHOULD NOT PRINT THE TEMPLATE that I gave you now on; JUST KEEP GENERATING from the truncated part. NEVER RESTART the conversation. Thank you."
-            success, response, message = bot.ask(again_final_prompt)
-            if success: 
-                # Find the overlapping part between the last response and the new response
-                overlap_start = response.find(last_response_part)
-                if overlap_start != -1:
-                    response = response[overlap_start + len(last_response_part):]
-
-                concatenated_responses += response  # Append the response without the overlapping part to the concatenated_responses
-                print(f"\033[31;1;mINFO: Concatenated response from ChatGPT: {concatenated_responses}\033[0m")
-            else:
-                raise RuntimeError(message)
-        elif user_input.strip().lower() == "n":
-            break
-        else: 
-            print("\033[31;1;mERROR: Invalid choice. Please try again.\033[0m")
-
-    # Concatenate all the response parts upto the number of times the user says yes. Direction: end to start
-    final_response = final_response + "\n" + concatenated_responses
-
     # prompt user to choose output format
     output_format = input("\n\033[31;1;mINFO Choose output format (stream / txt / md): \033[0m")
 

@@ -30,12 +30,15 @@ ChatGPT를 여러 계정으로 테스트한 결과 계정이 **무료 사용자*
 
 ~~안타깝게도 현재 ChatGPT의 무료 버전은 입력 텍스트의 긴 컨텍스트를 이해하고 잘 저장하지 못하므로, 성공적인 결과를 기대하기가 어렵습니다. 예를 들어, 입력 텍스트와 전혀 관련이 없는 요약을 내보낸다든지, 입력 텍스트의 특정 부분만 고려한 출력을 내보내고는 합니다.~~
 
-__PDF 변환 기능 재활성화__
-> ::2023-04-11 업데이트::
+__PDF 변환 기능 제거__
+> ::2023-06-21 업데이트::
 > 
-OpenCV 및 PyTesseract 라이브러리를 사용하여 PDF 변환 기능을 향상시켰습니다. 이제 파일 형식 선택에서 '옵션 3'을 선택할 수 있습니다.
-그러나, 더 나은 결과를 위해선 직접 정돈한 `.md` 및 `.txt` 파일을 사용하는 것이 효과적입니다. OCR이 아무리 잘 되어도 오타나 이상한 문자들이 포함될 수 있기 때문입니다.
-PDF 선택은 편의를 위해서만 사용하세요.
+
+__PaperSumGPT는 더 이상 PDF 파일을 변환하지 않습니다.__ 대신, 아래 사이트들을 이용하여 PDF 파일을 텍스트로 변환하신 후, 변환된 텍스트를 PaperSumGPT에 넣어주세요. 
+
+- [PDF to Text](https://pdftotext.com/)
+- [PDF to Text Converter](https://www.pdf2go.com/pdf-to-text)
+- [AvePDF](https://avepdf.com/ko/pdf-to-text)
 
 ---
 
@@ -181,7 +184,7 @@ ERROR: There is no file in the current directory. Please check the current direc
 ------------------------------------------------
 ```
 
-프로그램이 input 파일을 인식할 수 있도록, 논문 파일을 현재 디렉토리에 놓아주세요. 이 리포지토리 내에 있는 `chatgpt-a+meta+analysis+after+2.5+months.pdf`를 예시 파일로 활용하겠습니다. `ExampleRun/` 폴더 내부를 확인해보세요. 논문 파일을 현재 디렉토리에 옮겨준 후, 다음을 입력하여 `papersumgpt`를 실행해주세요.
+프로그램이 input 파일을 인식할 수 있도록, 논문 파일을 현재 디렉토리에 놓아주세요. 이 리포지토리 내에 있는 `chatgpt-a+meta+analysis+after+2.5+months.txt`를 예시 파일로 활용하겠습니다. `ExampleRun/` 폴더 내부를 확인해보세요. 논문 내용이 포함된 파일을 현재 디렉토리에 옮겨준 후, 다음을 입력하여 `papersumgpt`를 실행해주세요.
 
 ```bash
 papersumgpt
@@ -193,16 +196,16 @@ INFO: Please type the number the file type that you want to use:
 
     1. Markdown (`.md`) file
     2. Plain text (`.txt`) file
-    3. PDF (`.pdf`) file
+
 ```
-PDF 파일을 사용할 것이므로, 3번을 선택해줍니다.
+텍스트 파일을 사용할 것이므로, 2번을 선택해줍니다.
 
 ```
 ------------------------------------------------
 +---------------+------------------------------------------------+
 |   File number | File name                                      |
 |---------------+------------------------------------------------|
-|             1 | ./chatgpt-a+meta+analysis+after+2.5+months.pdf |
+|             1 | ./chatgpt-a+meta+analysis+after+2.5+months.txt |
 +---------------+------------------------------------------------+
 ------------------------------------------------
 
@@ -211,45 +214,12 @@ INFO: Please select the file number or press "0" to exit:
 1번 파일을 선택하여 input으로 활용하겠습니다.
 
 ```
-INFO: The file name that would be utilized is ./chatgpt-a+meta+analysis+after+2.5+months.pdf
+INFO: The file name that would be utilized is ./chatgpt-a+meta+analysis+after+2.5+months.txt
 ------------------------------------------------
 INFO: Do you want to turn on `verbose` mode? If you turn on `verbose` mode, the program will print the intermediate results. (y/n):
 ```
 `verbose` 모드란, 프로그램이 진행되는 과정을 모두 보여주는 모드입니다. `verbose` 모드를 켜면, 프로그램이 진행되는 과정을 보여주기 때문에, 프로그램이 어떻게 작동하는지 확인할 수 있습니다. `verbose` 모드를 켜고 싶다면, `y`를 입력해주세요. `verbose` 모드를 끄고 싶다면, `n`을 입력해주세요.
 
-```
-------------------------------------------------
-INFO: Please type the number the ChatGPT model that you want to use:
-
-    1. default (Turbo version for ChatGPT Plus users and default version for free users)
-    2. gpt4 (Only available for ChatGPT Plus users; a little bit slower than the default model)
-    3. legacy (Only available for ChatGPT Plus users; an older version of the default model)
-
-    Note that the option 2 and 3 are NOT available for free users. If you are the free user, please select the option 1.
-```
-마지막으로, 우리가 사용할 ChatGPT 모델을 선택해줍니다. 여기서는 `default` 모델을 사용하겠습니다.
-
-```
-------------------------------------------------
-INFO: Converting the PDF file to a markdown file...
-INFO: The PDF file has been converted to a markdown file.
-------------------------------------------------
-INFO: Please input the maximum length of input text (if don't know, just input 5000):
-```
-이제 프로그램이 PDF 파일에서 텍스트만을 추출해 Markdown 포맷으로 변경해줍니다. `maximum length`란, 긴 논문을 얼마만큼의 글자 수로 분할 시킬 것인지를 의미합니다. 여기서는 `5000`을 넣도록 하겠습니다.
-
-```
-INFO: Tossing initial prompt...
-INFO: ChatGPT started abbreviating the input contents...
-INFO: Waiting for ChatGPT to respond for 1/11 part(s)...
-INFO: 1/11 part(s) tossed to ChatGPT.
-INFO: Waiting for ChatGPT to respond for 2/11 part(s)...
-INFO: 2/11 part(s) tossed to ChatGPT.
-INFO: Waiting for ChatGPT to respond for 3/11 part(s)...
-INFO: 3/11 part(s) tossed to ChatGPT.
-INFO: Waiting for ChatGPT to respond for 4/11 part(s)...
-...
-```
 프로그램이 답변을 얻어낼 동안, 잠시 기다려보죠! ☕️
 
 답변이 형성되는 동안, 한 가지 언급드리자면, `papersumgpt`가 입/출력 하는 모든 내용은 여러분의 ChatGPT 계정에 실시간으로 반영이 됩니다. https://chat.openai.com/ 를 참고해보세요. 
@@ -262,12 +232,8 @@ INFO Choose output format (stream / txt / md):
 `stream`, `txt`, or `md` 중 하나를 타이핑하여 출력할 파일의 형태를 고를 수 있습니다. 저희는 `.md` 파일 형식을 출력 파일 타입으로 지정하겠습니다. 
 
 ```
-INFO: Output saved to ./chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md
+INFO: Output saved to ./chatgpt-a+meta+analysis+after+2.5+months.txt_markdowned.md
 ```
-`ExampleRun/` 폴더 안에 있는 `chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md`를 확인해보세요!
-
-마크다운 에디터를 열어 출력 파일 내용을 모두 복사해 붙여 넣어보세요. 🎉
-(Click [여기](ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.md_output.md) 를 누르시면, 출력 파일 에시를 확인해보실 수 있습니다. 
 
 때때로, ChatGPT는 완벽하지 못한 답변을 도출할 수도 있습니다. 여러분의 연구에 이 프로그램이 큰 도움이 되기를 기원합니다! 🚀
 
@@ -275,7 +241,6 @@ INFO: Output saved to ./chatgpt-a+meta+analysis+after+2.5+months.pdf_markdowned.
 
 - [pyfiglet](https://pypi.org/project/pyfiglet/) - For generating ASCII art of the project name.
 - [tabulate](https://pypi.org/project/tabulate/) - For creating clean and readable tables for the output.
-- [PyPDF2](https://pypi.org/project/PyPDF2/) - For reading and processing PDF files.
 - [chatgpt_wrapper](https://github.com/mmabrouk/chatgpt-wrapper) - An useful open-source unofficial Power CLI, Python API and Flask API that lets us interact programmatically with ChatGPT/GPT4. 
 
 ## License

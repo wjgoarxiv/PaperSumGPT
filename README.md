@@ -11,7 +11,7 @@
 
 ## Table of Contents
 - [NOTE 1: For ChatGPT free users!](#note-1-for-chatgpt-free-users)
-- [NOTE 2: PDF converting functionality revitalized](#note-2-pdf-converting-functionality-revitalized)
+- [NOTE 2: PDF converting functionality deprecated](#note-2-pdf-converting-functionality-deprecated)
 - [NOTE 3: ANSI escape sequences updated!](#note-3-ansi-escape-sequences-updated)
 - [How to Install](#how-to-install)
   - [(0) For Windows users (first time only!)](#0-for-windows-users-first-time-only)
@@ -25,7 +25,7 @@
 - [License](#license)
 
 ---
-## 🗞️ NOTE 1: For ChatGPT free users!
+## NOTE 1: For ChatGPT free users!
 > ::2023-04-03 updated::
 
 After I tested with several accounts with ChatGPT, I found that there were __significant differences in the performance of ChatGPT__ depending whether the account is a __free user__ or __a paid user (*ChatGPT Plus*)__.
@@ -34,12 +34,16 @@ If you are a free user of ChatGPT, and you have a long paper to summarize, I rec
 
 Unfortunately, the free version of ChatGPT cannot understand and store the long context of the input text, which leads to a poor performance; it will export a summary that is NOT related to the input text at all, or it will export an output related to the certain part of the input text.
 
-## 🗞️ NOTE 2: PDF converting functionality revitalized!
-> ::2023-04-11 updated::
+## NOTE 2: PDF converting functionality deprecated
+> ::2023-06-21 updated::
 
-Using the OpenCV and PyTesseract libraries, I've enhanced the PDF conversion functionality. You can now choose `option 3` in the file type selection!
+The PDF converting functionality is now deprecated. Instead, I recommend you to use the following online PDF to text converter: 
 
-## 🗞️ NOTE 3: ANSI escape sequences updated!
+- [PDF to Text](https://pdftotext.com/)
+- [PDF to Text Converter](https://www.pdf2go.com/pdf-to-text)
+- [AvePDF](https://avepdf.com/ko/pdf-to-text)
+
+## NOTE 3: ANSI escape sequences updated!
 > ::2023-04-12 updated:: 
 
 ANSI escape sequences are now updated to support the rich text formatting of the messages in the terminal. Important notices and warnings are now highlighted in bolded red font. 
@@ -191,13 +195,12 @@ Copy that file to the current working directory and run `papersumgpt` again:
 papersumgpt
 ```
 
-And then, papersumgpt will ask you to choose between `Markdown` or `PDF` as the output format.
+And then, papersumgpt will ask you to choose the file type that you want to use:
 ```
 INFO: Please type the number the file type that you want to use:
 
     1. Markdown (`.md`) file
     2. Plain text (`.txt`) file
-    3. PDF (`.pdf`) file
 
 :
 
@@ -222,19 +225,7 @@ INFO: The file name that would be utilized is ./chatgpt-a+meta+analysis+after+2.
 ------------------------------------------------
 INFO: Do you want to turn on `verbose` mode? If you turn on `verbose` mode, the program will print the intermediate results. (y/n):
 ```
-Now, we have to choose whether to turn on the `verbose` mode. If you turn on the `verbose` mode, the program will print all the intermediate results. If you turn off the `verbose` mode, the program will only print the final result. In this case, we will turn off the `verbose` mode by pressing `n`. 
-
-```
-------------------------------------------------
-INFO: Please type the number the ChatGPT model that you want to use:
-
-    1. default (Turbo version for ChatGPT Plus users and default version for free users)
-    2. gpt4 (Only available for ChatGPT Plus users; a little bit slower than the default model)
-    3. legacy (Only available for ChatGPT Plus users; an older version of the default model)
-
-    Note that the option 2 and 3 are NOT available for free users. If you are the free user, please select the option 1.
-```
-Finally, we will choose the ChatGPT model that we want to use. In this case, we will choose the default model. Press `1` to choose the default model.
+If you want to see the intermediate results, you can type `y`. Otherwise, you can type `n`. In this case, we will type `y` to see the intermediate results.
 
 ```text
 INFO: Tossing initial prompt...

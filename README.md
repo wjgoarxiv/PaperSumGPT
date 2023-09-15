@@ -23,6 +23,7 @@
   - [(2) Run `papersumgpt` to summarize the content of a paper](#2-run-papersumgpt-to-summarize-the-content-of-a-paper)
 - [Dependencies](#dependencies)
 - [License](#license)
+- [Extra: The easy way (using ChatGPT splitter)](#extra-the-easy-way-using-chatgpt-splitter)
 
 ---
 ## NOTE 1: For ChatGPT free users!
@@ -283,6 +284,111 @@ Open the markdown file with markdown-compatible editors. You can see the awesome
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+## Extra: The EASY way (using ChatGPT splitter)
+> ::2023-09-15 updated:: 
+
+You can even achieve the same results even without installing `papersumgpt`! 
+
+Thanks to the website [ChatGPT splitter](https://chatgptsplitter.com/), you can easily summarize the contents of a paper (but it requires you to click the splitted contents manually :) ). Here how you can do it: 
+
+1. Convert the paper texts & contents by using PDF-to-text converter. You can visit any of the following websites: 
+    - [PDF to Text](https://pdftotext.com/)
+    - [PDF to Text Converter](https://www.pdf2go.com/pdf-to-text)
+    - [AvePDF](https://avepdf.com/ko/pdf-to-text)
+
+2. Save the converted text file into your local computer with the file type `.txt` (`.md` is also possible).
+
+3. Next, visit [ChatGPT splitter](https://chatgptsplitter.com/) website, and click `Upload file(s)` button (or you can paste the text contents into the `Or paste your text` section).
+
+4. Into the `Prompt` section, paste the following prompt: 
+    ```
+    Please, act as 'High-quality content abbreviator'. Since you have the input limits (OpenAI limited your input limit), you have to firstly take the all the inputs iteratively. To do this, I've already truncated the long inputs into each subpart. You'll now have to take the inputs iteratively. The important thing is that you should NOT answer directly or respond to the previous message. Make sure that you have to accomplish the task when all the inputs are given. I'll let you know if all the inputs are given.
+    ```
+
+5. Click `Process` button! 
+
+6. The truncated texts would be splitted into several parts. You can click the `Copy` button to copy the splitted contents, and iteratively paste the contents into the ChatGPT (this takes time and effort).
+
+7. If you pasted the final chunk, then you can copy either of the following **final prompts** that I've prepared:
+
+    **(1) Tabulated version**
+    ```
+    Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following markdown format. The markdown format is as follows:
+    
+    ------ TEMPLATE STARTS ------
+
+    # **[TITLE]**
+    (Bring the title from the foremost heading in the document. The powerful hint is that the title comes before the people who wrote the document.)
+
+    ## **Introduction**
+
+    ## **Methodology**
+    ### **Apparatus**
+    ### **Experimental procedure**
+    ### **Computational procedure (if exists)**
+    ### **Data analysis**
+
+    ## **Results & discussion**
+
+    ## **Conclusions**
+
+    ## **Significance of this study**
+
+    ## **Things to look out for in follow-up research**
+
+    ### **Useful references to consider**
+    ...
+
+    ------ TEMPLATE ENDS ------
+    You have to write the outputs in a way that the readers can understand the contents easily. Don't forget to miss any important information from inputs. Detailed things that should be noticed would be included in the output (if possible, please bold them with `__BOLD__` or `**BOLD**` markdown marking for clear visibility). Consecutively, if possible, please find some useful references (including title and authors) from the Text or Markdown input file, and re-write them into `### Useful references to consider` subheader. 
+    Sort all these things into TABLE format; which will be efficient to understand what is what. Something like this:
+
+    ```markdown 
+    | Sections | Abbreviated contents | 
+    | :----: | :----: |
+    | __Title__ | [TITLE] |
+    | __Introduction__ | [INTRODUCTION] |
+    | __Methodology__ | [METHODOLOGY] | 
+    | __Experimental procedure__ | [EXPERIMENTAL PROCEDURE] |
+    | __Computational procedure__ | [COMPUTATIONAL PROCEDURE] | 
+    | __Data analysis__ | [DATA ANALYSIS] | 
+    | __Results & discussion__ | [RESULTS & DISCUSSION] |
+    | __Conclusions__ | [CONCLUSIONS] |
+    | __Significance of this study__ | [SIGNIFICANCE OF THIS STUDY] | 
+    | __Things to look out for in follow-up research__ | [THINGS TO LOOK OUT FOR IN FOLLOW-UP RESEARCH] | 
+    | __Useful references to consider__ | [USEFUL REFERENCES TO CONSIDER] |
+    ```
+
+    **(2) Abbreviated markdown version** 
+    ```
+    Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following format. Note that you have to write the outputs __assuming you are making a paper sharing powerpoint presentation (ppt) for the audience__. You have to make audiences understand the content and methodology of this paper very well. Therefore, clearly abbreviate and express the important information only. Thank you for your consideration.
+    
+    ```markdown
+    # **[TITLE]**
+    (Bring the title from the foremost heading in the document. The powerful hint is that the title comes before the people who wrote the document.)
+
+    ## **Introduction**
+
+    ## **Methodology**
+    ### **Apparatus**
+    ### **Experimental procedure**
+    ### **Computational procedure (if exists)**
+    ### **Data analysis**
+
+    ## **Results & discussion**
+
+    ## **Conclusions**
+
+    ## **Significance of this study**
+
+    ## **Things to look out for in follow-up research**
+
+    ### **Useful references to consider**
+    ...
+    ```
+
+8. That's it! You can see the awesome results! 🎉
 
 ---
 

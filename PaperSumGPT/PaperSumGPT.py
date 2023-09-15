@@ -113,7 +113,7 @@ def main():
     print('------------------------------------------------')
 
     # Ask user their desired ChatGPT model
-    chatgpt_model = 'gpt4'
+    chatgpt_model = 'default'
 
     # ------------------ Function starts ------------------ #
     # Load config settings

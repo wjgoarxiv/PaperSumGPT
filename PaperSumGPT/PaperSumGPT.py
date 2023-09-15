@@ -1,320 +1,192 @@
-# PaperSumGPT
-<a href="https://www.buymeacoffee.com/woojingo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 120px !important;" ></a>
+# ------------------ Import libraries ------------------ #
+import os
+import glob
+import pyfiglet
+import numpy as np
+from tabulate import tabulate
+from chatgpt_wrapper import ChatGPT
+from chatgpt_wrapper.config import Config
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.7+](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/downloads/release/python-370/)
+# Manipulating PDF
+import cv2
+import pytesseract as tess
+from pdf2image import convert_from_path
+from PIL import Image
 
-*PaperSumGPT is a tool for abbreviating **long scientific paper contents** using ChatGPT, designed to help researchers and students to quickly understand the key points of academic papers.*
-> **한국 분들은 [여기](README-ko_kr.md)에 있는 문서를 읽어주세요!**
+# For spinning wheel
+import sys
+import time
+import threading
 
-<img src="demorun.gif" width="70%">
+# ------------------ Main code starts ------------------ #
+# Print the title 
+os.system('cls' if os.name == 'nt' else 'clear')
+title = pyfiglet.figlet_format('PaperSumGPT', font = 'small')
+print('\n')
+print(title+'\n')
+print('\n')
+print('------------------------------------------------')
+print('If you have any questions, please send your questions to my email.')
+print('\nOr, please suggest errors and areas that need updating.')
+print('\n 📨 woo_go@yahoo.com')
+print('\nVisit \033[;4mhttps://github.com/wjgoarxiv/papersumgpt\033[0m for more information.')
+print('------------------------------------------------')
 
-## Table of Contents
-- [NOTE 1: For ChatGPT free users!](#note-1-for-chatgpt-free-users)
-- [NOTE 2: PDF converting functionality deprecated](#note-2-pdf-converting-functionality-deprecated)
-- [NOTE 3: ANSI escape sequences updated!](#note-3-ansi-escape-sequences-updated)
-- [How to Install](#how-to-install)
-  - [(0) For Windows users (first time only!)](#0-for-windows-users-first-time-only)
-  - [(1) Clone this repository](#1-clone-this-repository)
-  - [(2) Install dependencies](#2-install-dependencies)
-  - [(3) Install PaperSumGPT](#3-install-papersumgpt)
-- [Usage](#usage)
-  - [(1) Run `chatgpt_wrapper` before using `papersumgpt`](#1-run-chatgpt_wrapper-before-using-papersumgpt)
-  - [(2) Run `papersumgpt` to summarize the content of a paper](#2-run-papersumgpt-to-summarize-the-content-of-a-paper)
-- [Dependencies](#dependencies)
-- [License](#license)
-- [Extra: The easy way (using ChatGPT splitter)](#extra-the-easy-way-using-chatgpt-splitter)
+# Showing spinning_wheel effect
 
----
-## NOTE 1: For ChatGPT free users!
-> ::2023-04-03 updated::
+def spinning_wheel(message, stop_event):
+    wheel = ['-', '\\', '|', '/']
+    i = 0
+    while not stop_event.is_set():
+        sys.stdout.write('\r' + str(message) + ' ' + str(wheel[i % len(wheel)]))
+        sys.stdout.flush()
+        time.sleep(0.05)
+        i += 1
+    sys.stdout.write('\r' + ' ' * (len(message) + 2) + '\r')
+    sys.stdout.flush()
 
-After I tested with several accounts with ChatGPT, I found that there were __significant differences in the performance of ChatGPT__ depending whether the account is a __free user__ or __a paid user (*ChatGPT Plus*)__.
-
-If you are a free user of ChatGPT, and you have a long paper to summarize, I recommend you to upgrade your account to __[ChatGPT Plus](https://openai.com/blog/chatgpt-plus)__ to get a better performance. 
-
-Unfortunately, the free version of ChatGPT cannot understand and store the long context of the input text, which leads to a poor performance; it will export a summary that is NOT related to the input text at all, or it will export an output related to the certain part of the input text.
-
-## NOTE 2: PDF converting functionality deprecated
-> ::2023-06-21 updated::
-
-The PDF converting functionality is now deprecated. Instead, I recommend you to use the following online PDF to text converter: 
-
-- [PDF to Text](https://pdftotext.com/)
-- [PDF to Text Converter](https://www.pdf2go.com/pdf-to-text)
-- [AvePDF](https://avepdf.com/ko/pdf-to-text)
-
-## NOTE 3: ANSI escape sequences updated!
-> ::2023-04-12 updated:: 
-
-ANSI escape sequences are now updated to support the rich text formatting of the messages in the terminal. Important notices and warnings are now highlighted in bolded red font. 
-
----
-
-## How to Install
-
-> If you are using Mac, you can skip [(0) For Windows users](#0-for-windows-users) step.
-
-> ### (0) For Windows users (first time only!)
-> Since there are no pre-built binaries for Windows, follow the instructions below to install PaperSumGPT on Windows.
-> 1. In the search tab, type `Turn Windows features On (Windows 기능 켜기/끄기 in Korean)`. Then, check the box of `Windows Subsystem for Linux`. 
-> 2. Next, reboot your computer.
-> 3. Now, you need to install [Ubuntu](https://apps.microsoft.com/store/detail/ubuntu-22042-lts/9PN20MSR04DW?hl=en-us&gl=kr&rtc=1) in your local computer.
-> 4. Open Ubuntu and make your UNIX accounts and passwords.
-> 5. For ease of use, you should install `Anaconda` by following instructions. 
->     ```
->     wget https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh
->     ```
->     ```
->     bash Anaconda3-2019.10-Linux-x86_64.sh
->     ```
->     Read all the instructions with Enter and type `yes` to agree with the license.
-> 
->     ```
->     source ~/.bashrc
->     ```
-> 
->     Now, type
->     ```
->     conda activate
->     ```
->     in your terminal. If you see `(base)` in your terminal, you have successfully installed Anaconda.
-> 6. Install [VcXsrv](https://sourceforge.net/projects/vcxsrv/) in your local computer.
->     Download `VcXsrv` installer and run it. <br/>
->     Then, click `Finish`. 
->     
->     Next, open `XLaunch` and click `Next`.
-> 
->     After you open `XLaunch`, you should check the following options:
->     - [x] Multiple windows
->     - [x] Start no client
->     - [x] Disable access control
-> 
->     Done! Now let's move on to the terminal.
-> 
-> 7. Type the below commands in your terminal. 
->     ```
->     sudo systemd-machine-id-setup
->     ```
->     ```
->     sudo dbus-uuidgen --ensure
->     ```
->     ```
->     cat /etc/machine-id
->     ```
->     If terminal shows a long string of numbers and letters, you have successfully installed `systemd-machine-id-setup` and `dbus-uuidgen`.
-> 
->     Finally, you can install `x11-apps` by typing the following command:
->     ```
->     sudo apt-get install x11-apps xfonts-base xfonts-100dpi xfonts-75dpi xfonts-cyrillic
->     ```
-> 
->     Add the environment variable `DISPLAY` to your `.bashrc` file by typing the following command:
->     ```
->     echo "export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
->     sudo /etc/init.d/dbus start &> /dev/null" >> ~/.bashrc
->     ```
->     ```
->     source ~/.bashrc
->     ```
-> 
->     Test your X11 GUI by typing the following command:
->     ```
->     xeyes
->     ```
->     If you see a pair of eyes, you have successfully installed X11 GUI.
-> 
-> These steps are essential (in Windows) for successfully executing `playwright` in Windows terminal (which is critical when you configure your `ChatGPT` account).
-
-### (1) Clone this repository
-You can install PaperSumGPT by cloning this repository and install it from the source:
-
-```bash
-git clone https://github.com/wjgoarxiv/papersumgpt.git
-```
-```bash
-cd papersumgpt/
-```
-
-### (2) Install dependencies
-And you must use `install_old-repo.sh` to install the legacy version of `chatgpt_wrapper`. The new version of `chatgpt_wrapper` is not compatible with the current version of `papersumgpt` (since the new version of `chatgpt_wrapper` will use the ChatGPT API, not the stream-based one).
-```bash
-chmod +x * 
-```
-```bash
-./install_old-repo.sh
-```
-
-### (3) Install PaperSumGPT
-Then, you can install PaperSumGPT by running the following command:
-
-```bash
-pip install .
-```
-
-
-## Usage
-### (1) Run `chatgpt_wrapper` before using `papersumgpt`
-Before using `papersumgpt`, you must run `chatgpt_wrapper` to start the ChatGPT server. 
-
-Since you are first running `chatgpt_wrapper` in your computer, you might input the following command to install `playwright`:
-```
-playwright install
-```
-The *nightly* will be downloaded and installed in your local machine.
-
-Next, you can use the following command to start the server:
-
-```bash
-chatgpt install
-```
-Login to your ChatGPT account in *Nightly* browser. If you see the chat window, close the browser and type `/exit` to close the `chatgpt_wrapper`. After that, you can restart the `chatgpt_wrapper` by running the following command:
-
-```bash
-chatgpt
-```
-This is the original functionality of `chatgpt_wrapper`. For more information, please visit the [chatgpt_wrapper github repository](https://github.com/mmabrouk/chatgpt-wrapper). 
-
-### (2) Run `papersumgpt` to summarize the content of a paper
-After running `chatgpt_wrapper`, you can use `papersumgpt` to summarize the content of a paper. You can use the following command to summarize the content of a paper:
-
-```bash
-papersumgpt
-```
-
-The following error might occur:
-```
-------------------------------------------------
-ERROR: There is no file in the current directory. Please check the current directory.
-------------------------------------------------
-```
-
-Note that you must put the paper you want to summarize in the current working directory. For a demonstration, we will use `chatgpt-a+meta+analysis+after+2.5+months.txt` as an example. Refer to the `ExampleRun/` folder. A `chatgpt-a+meta+analysis+after+2.5+months.txt` file was prepared by just copying the text contents of `chatgpt-a+meta+analysis+after+2.5+months.pdf` and pasting it into a text file.
-
-Copy that file to the current working directory and run `papersumgpt` again:
-```bash
-papersumgpt
-```
-
-And then, papersumgpt will ask you to choose the file type that you want to use:
-```
-INFO: Please type the number the file type that you want to use:
+def main():
+    # Ask user if the brought input file is a markdown file or plain text file 
+    print('\n')
+    file_type = int(input("""\033[31;1;mINFO: Please type the number the file type that you want to use:\033[0m
 
     1. Markdown (`.md`) file
     2. Plain text (`.txt`) file
 
-:
+    NOTE: I recommend you other websites that convert PDF to text files in case you want to use PDF files as input files.
 
-```
-Since we have `chatgpt-a+meta+analysis+after+2.5+months.txt` in the `ExampleRun/` folder, we will choose option 2. The papersumgpt will show the list of text files in the current directory and ask you to choose the file you want to summarize. 
+    : """))
+    print('\n')
+    print('------------------------------------------------')
 
-```
-------------------------------------------------
-+---------------+------------------------------------------------+
-|   File number | File name                                      |
-|---------------+------------------------------------------------|
-|             1 | ./chatgpt-a+meta+analysis+after+2.5+months.txt |
-+---------------+------------------------------------------------+
-------------------------------------------------
+    # Print the list of files in the current directory
+    if file_type == 1:
+        file_list = glob.glob('./*.md')
+        file_list = [file.split('\\')[-1] for file in file_list]
+        file_list.sort()
 
-INFO: Please select the file number or press "0" to exit:
-```
-Then, we will choose option 1. 
+    elif file_type == 2:
+        file_list = glob.glob('./*.txt')
+        file_list = [file.split('\\')[-1] for file in file_list]
+        file_list.sort()
 
-```
-INFO: The file name that would be utilized is ./chatgpt-a+meta+analysis+after+2.5+months.txt
-------------------------------------------------
-INFO: Do you want to turn on `verbose` mode? If you turn on `verbose` mode, the program will print the intermediate results. (y/n):
-```
-If you want to see the intermediate results, you can type `y`. Otherwise, you can type `n`. In this case, we will type `y` to see the intermediate results.
+    # File not found error handling
+    try: 
+        if len(file_list) == 0:
+            raise FileNotFoundError
+        else:
+            pass
 
-```text
-INFO: Tossing initial prompt...
-INFO: ChatGPT started abbreviating the input contents...
-INFO: Progressing... (3/11) 
-...
-```
-The tool will process the content summary of the paper and make an output file in the same directory as the input file. Let's wait for a while! ☕️
+    # Alert the user 
+    except: 
+        print('\033[31;1;mERROR: There is no file in the current directory. Please check the current directory.\033[0m')
+        print('------------------------------------------------')
+        exit()
 
-While we are waiting, I have to mention that all these steps are synchronized with your current ChatGPT session in [ChatGPT website](https://chat.openai.com/). You can visit the website later to see all the progresses of the content summary. 
+    # Print the list of files in the current directory
+    file_num = [] 
+    for i in range(len(file_list)):
+        file_num.append(i+1)
+    print(tabulate({'File number': file_num, 'File name': file_list}, headers='keys', tablefmt='psql'))
+    print('------------------------------------------------')
+    user_input = int(input('\n\033[31;1;mINFO: Please select the file number or press "0" to exit: \033[0m'))
 
-After the abbreviation process is finished, the program will show the following message:
+    if user_input == 0:
+        print("\033[31;1;4mINFO: Exiting the program.\033[0m")
+        exit()
+    else:
+        try: 
+            print("\033[31;1;mINFO: The file name that would be utilized is: \033[0m", file_list[user_input-1])
+        except:
+            print("\033[31;1;mERROR: Your input number is out of range. Please check the file number.\033[0m")
+            print("\033[31;1;mERROR: The program will stop.\033[0m")
+            exit()
 
-```text
-INFO Choose output format (stream / txt / md):
-```
-You can choose the output format by typing `stream`, `txt`, or `md`. In this case, we will choose `md` to output the result as a markdown file.
+    # Ask user to turn on `verbose` mode. 
+    # If the user turns on `verbose` mode, the program will print the intermediate results.
+    print('------------------------------------------------')
+    verbose = input("\033[31;1;mINFO: Do you want to turn on `verbose` mode? If you turn on `verbose` mode, the program will print the intermediate results. (y/n): \033[0m")
+    if verbose == 'y' or verbose == 'Y':
+        verbose = True
+    elif verbose == 'n' or verbose == 'N':
+        verbose = False
+    print('------------------------------------------------')
 
-```text
-INFO: Output saved to ./chatgpt-a+meta+analysis+after+2.5+months.txt.md
-```
-You can find `chatgpt-a+meta+analysis+after+2.5+months.txt.md` in the `ExampleRun/` folder. 
+    # Ask user their desired ChatGPT model
+    chatgpt_model = 'gpt4'
 
-Open the markdown file with markdown-compatible editors. You can see the awesome result! 🎉
-(Click [here](ExampleRun/chatgpt-a+meta+analysis+after+2.5+months.txt_output.md) to see the output markdown file)
+    # ------------------ Function starts ------------------ #
+    # Load config settings
+    config = Config()
+    config.set('chat.model', chatgpt_model)
 
-> ### **Output format has been more improved!**
-> ::2023-04-16 updated:: <br/>
-> Now, the abbreviation result is more improved! Since the prompt has been more enhanced, the abbreviation output is more excellent. You can see the output contents as __table__ format. The table format is more readable and clean. I've also added the updated version of output markdown file in the `ExampleRun/` folder. You can check [here](ExampleRun/[NEW] chatgpt-a+meta+analysis+after+2.5+months_output.md)! 🍾
->
-> #### **Output preview**
-> 
->> | Sections | Abbreviated contents |
->> | :---: | :---: |
->> | __Title__ | Perception of ChatGPT: An Analysis of Social Media and Scientific Publications |
->> | __Introduction__ | ChatGPT is a chatbot released by OpenAI that has gained over 100 million subscribers in two months. This paper presents a comprehensive analysis of how ChatGPT is perceived based on over 300k tweets and 150+ scientific papers. |
->> | __Methodology__ | The authors used NLP technology to analyze sentiment and emotion in tweets and machine translation systems to analyze tweets in languages other than English. For scientific papers, four co-authors annotated 48 Arxiv and 104 SemanticScholar papers on three dimensions: topic, impact, and quality. |
->> | __Experimental procedure__ | The authors annotated scientific papers using guidelines developed after low agreement in initial annotation rounds. Only paper abstracts were used for classification, and guidelines were developed for prioritizing labels in ambiguous cases. |
->> | __Data analysis__ | ChatGPT is generally perceived positively, with high quality and associated emotions of joy dominating. Its perception has slightly decreased since its debut, and non-English tweets tend to have more negative sentiment. ChatGPT is viewed as a great opportunity across various scientific fields, including the medical domain, but it is also seen as a threat in the education domain and from an ethical perspective. |
->> | __Results & discussion__ | The authors found that ChatGPT is viewed as an opportunity in most scientific fields, but also as a threat from an ethical perspective and in education. ChatGPT is mostly perceived positively on social media, with some decrease in positivity since its debut. |
->> | __Conclusions__ | This analysis contributes to shaping the public debate and informing the future development of ChatGPT. Future work should investigate trends over longer periods, consider popularity of tweets and papers, and investigate additional dimensions beyond sentiment and emotion. |
->> | __Significance of this study__ | This study provides insights into the perception of a highly popular chatbot, which can inform future development and public debate surrounding AI language models. |
->> | __Things to look out for in follow-up research__ | Future research should investigate the real impact of language models like ChatGPT on society, including their potential to exacerbate or mitigate existing inequalities and biases. |
->> | __Useful references to consider__ | Haque et al. (2022), Borji (2023), Bowman (2022), Beese et al. (2022) |
+    # Initialize ChatGPT
+    bot = ChatGPT(config)
 
-> ### NOTES
-> Note that ChatGPT sometimes makes undesired outputs. In this case, you should try a few times to get the best result. Good luck with your research! 🚀
+    # read input file
 
-## Dependencies
+    try:
+        with open(file_list[user_input-1], 'r', encoding="utf-8") as f:
+            input_text = f.read()
+    except: 
+        print("\033[31;1;mERROR: The file is not readable. Please check the file.\033[0m")
+        print("\033[31;1;mERROR: The program will stop.\033[0m")
+        exit()
 
-- [pyfiglet](https://pypi.org/project/pyfiglet/) - For generating ASCII art of the project name.
-- [tabulate](https://pypi.org/project/tabulate/) - For creating clean and readable tables for the output.
-- [chatgpt_wrapper](https://github.com/mmabrouk/chatgpt-wrapper) - An useful open-source unofficial Power CLI, Python API and Flask API that lets us interact programmatically with ChatGPT/GPT4. 
+    # Ask user maximum length of input text (if don't know, just input 3000)
+    max_length = 7000
 
-## License
+    # truncate input text into smaller parts
+    input_parts = [input_text[i:i+max_length] for i in range(0, len(input_text), max_length)]
 
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+    # define initial prompt message
+    initial_prompt = "Please, act as 'High-quality content abbreviator'. Since you have the input limits (OpenAI limited your input limit), you have to firstly take the all the inputs iteratively. To do this, I've already truncated the long inputs into each subpart. You'll now have to take the inputs iteratively. The important thing is that you should NOT answer directly or respond to the previous message. Make sure that you have to accomplish the task when all the inputs are given. I'll let you know if all the inputs are given."
 
-## Extra: The EASY way (using ChatGPT splitter)
-> ::2023-09-15 updated:: 
+    # send initial prompt message to ChatGPT
+    print("\033[31;1;mINFO: Tossing initial prompt...\033[0m")
+    success, response, message = bot.ask(initial_prompt)
 
-You can even achieve the same results even without installing `papersumgpt`! 
+    if success:
+        print(f"\033[31;1;mINFO: ChatGPT started abbreviating the input contents...\033[0m")
+    else:
+        print(f"\033[31;1;mERROR: {message}\033[0m")
 
-Thanks to the website [ChatGPT splitter](https://chatgptsplitter.com/), you can easily summarize the contents of a paper (but it requires you to click the splitted contents manually :) ). Here how you can do it: 
+# initialize response list
+    response_parts = []
 
-1. Convert the paper texts & contents by using PDF-to-text converter. You can visit any of the following websites: 
-    - [PDF to Text](https://pdftotext.com/)
-    - [PDF to Text Converter](https://www.pdf2go.com/pdf-to-text)
-    - [AvePDF](https://avepdf.com/ko/pdf-to-text)
+    # define prompt message while iterating over input parts and send them to ChatGPT
+    for i, part in enumerate(input_parts):
+        if i == len(input_parts) - 1:
+            # {i+1} / {len(input_parts)} is for the last part of the input contents
+            prompt = f"This is the ({i+1} / {len(input_parts)}) part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```\nThank you for taking all the inputs."
+        else:
+            prompt = f"This is the ({i+1} / {len(input_parts)}) part of the truncated input contents. And PLEASE! Do NOT answer and if you understood the input, just keep asking me to input the leftover contents.\n\n```\n{part}\n```"
 
-2. Save the converted text file into your local computer with the file type `.txt` (`.md` is also possible).
+        formatted_progressing = f"\033[31;1;mINFO: Progressing... ({i+1}/{len(input_parts)})\033[0m"
+        stop_event_2 = threading.Event()
+        spinner_2 = threading.Thread(target=spinning_wheel, args=(formatted_progressing, stop_event_2))
+        spinner_2.daemon = True
+        spinner_2.start()
 
-3. Next, visit [ChatGPT splitter](https://chatgptsplitter.com/) website, and click `Upload file(s)` button (or you can paste the text contents into the `Or paste your text` section).
+        # send prompt message and prompt part to ChatGPT
+        success, response, message = bot.ask(prompt)
+        if success:
+            response_parts.append(response)
+        else:
+            print(f"\033[31;1;mERROR: {message}\033[0m")
 
-4. Into the `Prompt` section, paste the following prompt: 
-    ```
-    Please, act as 'High-quality content abbreviator'. Since you have the input limits (OpenAI limited your input limit), you have to firstly take the all the inputs iteratively. To do this, I've already truncated the long inputs into each subpart. You'll now have to take the inputs iteratively. The important thing is that you should NOT answer directly or respond to the previous message. Make sure that you have to accomplish the task when all the inputs are given. I'll let you know if all the inputs are given.
-    ```
+        # Handling the `verbose` mode 
+        if verbose == True:
+            print(f"\033[31;1;mINFO: Tossed prompt in {i+1}/{len(input_parts)} part(s): {prompt}\033[0m")
+            print(f"\033[31;1;mINFO: Response from ChatGPT: {response}\033[0m")
+        else:
+            pass
 
-5. Click `Process` button! 
+        stop_event_2.set()
+        spinner_2.join()
 
-6. The truncated texts would be splitted into several parts. You can click the `Copy` button to copy the splitted contents, and iteratively paste the contents into the ChatGPT (this takes time and effort).
-
-7. If you pasted the final chunk, then you can copy either of the following **final prompts** that I've prepared:
-
-    **(1) Tabulated version**
-    ```
-    Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following markdown format. The markdown format is as follows:
+    # Make a user to select one of the final prompts (final_prompt_1 = table form, final_prompt_2 = abbreviated form)
+    final_prompt_1 = """Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following markdown format. The markdown format is as follows:
     
     ------ TEMPLATE STARTS ------
 
@@ -360,9 +232,9 @@ Thanks to the website [ChatGPT splitter](https://chatgptsplitter.com/), you can 
     | __Useful references to consider__ | [USEFUL REFERENCES TO CONSIDER] |
     ```
 
-    **(2) Abbreviated markdown version** 
-    ```
-    Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following format. Note that you have to write the outputs __assuming you are making a paper sharing powerpoint presentation (ppt) for the audience__. You have to make audiences understand the content and methodology of this paper very well. Therefore, clearly abbreviate and express the important information only. Thank you for your consideration.
+    """
+
+    final_prompt_2 = """Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following format. Note that you have to write the outputs __assuming you are making a paper sharing powerpoint presentation (ppt) for the audience__. You have to make audiences understand the content and methodology of this paper very well. Therefore, clearly abbreviate and express the important information only. Thank you for your consideration.
     
     ```markdown
     # **[TITLE]**
@@ -387,9 +259,81 @@ Thanks to the website [ChatGPT splitter](https://chatgptsplitter.com/), you can 
     ### **Useful references to consider**
     ...
     ```
+    """
 
-8. That's it! You can see the awesome results! 🎉
+    # send final prompt message to ChatGPT
+    print("\033[31;1;mINFO: Tossing final prompt...\033[0m")
 
----
+    # join response parts to form final response
+    # If final response doesn't exist, use the last response part
+    try: 
+        final_response = response_parts[-1]
+    except:
+        print("\033[31;1;mERROR: List index out of range. Exiting...\033[0m")
+        sys.exit(1)
 
-For more information, bug reports, or feature requests, please visit the [GitHub repository](https://github.com/wjgoarxiv/papersumgpt).
+    # Ask the user to select the form of the final prompt
+    while True:
+        user_input = input("\n\033[31;1;mINFO: Which output format do you prefer? (table / markdown): \033[0m")
+        if user_input.strip() == "table":
+            final_prompt = final_prompt_1
+            break
+        elif user_input.strip() == "markdown":
+            final_prompt = final_prompt_2
+            break
+        else:
+            print("\033[31;1;mERROR: Invalid input. Please try again.\033[0m")
+            continue
+
+    # Send the final prompt to ChatGPT
+    if user_input.strip() == "table":
+        success, response, message = bot.ask(final_prompt_1)
+
+    elif user_input.strip() == "markdown":
+        success, response, message = bot.ask(final_prompt_2)
+
+    if success:
+        final_response = response  # Change this line
+        print(f"INFO: Response from ChatGPT: {response}")
+    else:
+        raise RuntimeError(message)
+    
+    # prompt user to choose output format
+    output_format = input("\n\033[31;1;mINFO Choose output format (stream / txt / md): \033[0m")
+
+    # define maximum length of each response part to be printed at once
+    max_response_length = 3000
+
+    if output_format.lower() == "stream":
+        # print response parts until the full response is generated
+        i = 0
+        while i < len(final_response):
+            # print next response part
+            response_part = final_response[i:i+max_response_length]
+            print(response_part)
+            i += len(response_part)
+
+            # if there are more response parts, ask the user to continue
+            if i < len(final_response):
+                user_input = input("\033[31;1;mINFO: Press enter to continue or type 'quit' to exit: \033[0m")
+                if user_input.strip().lower() == "quit":
+                    break
+                else: 
+                    print("\033[31;1;mERROR: Invalid choice. Quitting...\033[0m")
+
+    # Export the file name as same as the input file name (`file_list[user_input-1]`)
+    elif output_format.lower() == "txt":
+        # write response to a text file
+        with open("OUTPUT.txt", "w") as f:
+            f.write(final_response)
+        print("\033[31;1;mINFO: Output saved to OUTPUT.txt\033[0m")
+    elif output_format.lower() == "md":
+        # write response to a markdown file
+        with open("OUTPUT.md", "w") as f:
+            f.write(f"\n{final_response}\n")
+        print("\033[31;1;mINFO: Output saved to OUTPUT.md\033[0m")
+    else:
+        print("\033[31;1;mERROR: Invalid output format selected. Please choose 'stream', 'txt', or 'md'.\033[0m")
+
+if __name__ == "__main__":
+    main()

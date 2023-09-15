@@ -1,4 +1,4 @@
-# PaperSumGPT
+    # PaperSumGPT
 <a href="https://www.buymeacoffee.com/woojingo" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 120px !important;" ></a>
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -18,6 +18,7 @@
 - [(2) PaperSumGPT 실행하기](#2-PaperSumGPT-실행하기)
 - [Dependencies](#dependencies)
 - [License](#license)
+- [추가: 쉬운 방법 (ChatGPT splitter 사용)](#추가-쉬운-방법-ChatGPT-splitter-사용)
 
 ---
 ## 몇 가지 알림 사항들
@@ -246,6 +247,112 @@ INFO: Output saved to ./chatgpt-a+meta+analysis+after+2.5+months.txt_markdowned.
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+## 더 쉬운 방법 (ChatGPT splitter 사용)
+> ::2023-09-15 업데이트:: 
+
+`papersumgpt`를 설치하지 않아도 같은 결과를 얻을 수 있습니다. 
+
+[ChatGPT splitter](https://chatgptsplitter.com/) 웹사이트 덕분에 논문의 내용을 쉽게 요약할 수 있습니다 (단, 수동으로 분할된 내용을 클릭해 붙여넣어야 합니다 :) ). 다음과 같이 진행해볼 수 있습니다. 
+
+1. PDF-to-text 변환기를 사용하여 논문 텍스트 및 내용을 변환합니다. 다음 웹사이트 중 하나를 방문해보세요. 
+    - [PDF to Text](https://pdftotext.com/)
+    - [PDF to Text Converter](https://www.pdf2go.com/pdf-to-text)
+    - [AvePDF](https://avepdf.com/ko/pdf-to-text)
+
+2. 변환된 텍스트 파일을 로컬 컴퓨터에 `.txt` 파일 형식으로 저장합니다 (`.md` 형태도 가능합니다).
+
+3. 다음으로, [ChatGPT splitter](https://chatgptsplitter.com/) 웹사이트를 방문하고, `Upload file(s)` 버튼을 클릭해줍니다 (또는 `Or paste your text` 섹션에 텍스트 내용을 붙여넣을 수도 있습니다).
+
+4. `Prompt` 섹션에 다음 프롬프트를 붙여 넣어줍니다. 
+    ```
+    Please, act as 'High-quality content abbreviator'. Since you have the input limits (OpenAI limited your input limit), you have to firstly take the all the inputs iteratively. To do this, I've already truncated the long inputs into each subpart. You'll now have to take the inputs iteratively. The important thing is that you should NOT answer directly or respond to the previous message. Make sure that you have to accomplish the task when all the inputs are given. I'll let you know if all the inputs are given.
+    ```
+
+5. `Process` 버튼을 클릭합니다!
+
+6. 잘라진 텍스트는 여러 부분으로 분할됩니다. `Copy` 버튼을 클릭하여 분할된 내용을 복사하고, ChatGPT에 반복적으로 붙여넣어야 합니다 (이 부분이 제일 힘든 단계입니다...)
+
+7. 마지막 덩어리를 붙여넣으면, 다음과 같이 제가 준비한 **최종 프롬프트** 중 하나를 복사할 수 있습니다:
+
+    **(1) 표 형태 출력**
+    ```
+    Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following markdown format. The markdown format is as follows:
+
+    ------ TEMPLATE STARTS ------
+
+    # **[TITLE]**
+    (Bring the title from the foremost heading in the document. The powerful hint is that the title comes before the people who wrote the document.)
+
+    ## **Introduction**
+
+    ## **Methodology**
+    ### **Apparatus**
+    ### **Experimental procedure**
+    ### **Computational procedure (if exists)**
+    ### **Data analysis**
+
+    ## **Results & discussion**
+
+    ## **Conclusions**
+
+    ## **Significance of this study**
+
+    ## **Things to look out for in follow-up research**
+
+    ### **Useful references to consider**
+    ...
+
+    ------ TEMPLATE ENDS ------
+    You have to write the outputs in a way that the readers can understand the contents easily. Don't forget to miss any important information from inputs. Detailed things that should be noticed would be included in the output (if possible, please bold them with `__BOLD__` or `**BOLD**` markdown marking for clear visibility). Consecutively, if possible, please find some useful references (including title and authors) from the Text or Markdown input file, and re-write them into `### Useful references to consider` subheader. 
+    Sort all these things into TABLE format; which will be efficient to understand what is what. Something like this:
+
+    ```markdown 
+    | Sections | Abbreviated contents | 
+    | :----: | :----: |
+    | __Title__ | [TITLE] |
+    | __Introduction__ | [INTRODUCTION] |
+    | __Methodology__ | [METHODOLOGY] | 
+    | __Experimental procedure__ | [EXPERIMENTAL PROCEDURE] |
+    | __Computational procedure__ | [COMPUTATIONAL PROCEDURE] | 
+    | __Data analysis__ | [DATA ANALYSIS] | 
+    | __Results & discussion__ | [RESULTS & DISCUSSION] |
+    | __Conclusions__ | [CONCLUSIONS] |
+    | __Significance of this study__ | [SIGNIFICANCE OF THIS STUDY] | 
+    | __Things to look out for in follow-up research__ | [THINGS TO LOOK OUT FOR IN FOLLOW-UP RESEARCH] | 
+    | __Useful references to consider__ | [USEFUL REFERENCES TO CONSIDER] |
+
+    ```
+
+    **(2) 요약된 마크다운으로 출력**
+    ```
+    Now, all the inputs are given to you. You should combine and abbreviate all the inputs by fitting them into the following format. Note that you have to write the outputs __assuming you are making a paper sharing powerpoint presentation (ppt) for the audience__. You have to make audiences understand the content and methodology of this paper very well. Therefore, clearly abbreviate and express the important information only. Thank you for your consideration.
+
+    ```markdown
+    # **[TITLE]**
+    (Bring the title from the foremost heading in the document. The powerful hint is that the title comes before the people who wrote the document.)
+
+    ## **Introduction**
+
+    ## **Methodology**
+    ### **Apparatus**
+    ### **Experimental procedure**
+    ### **Computational procedure (if exists)**
+    ### **Data analysis**
+
+    ## **Results & discussion**
+
+    ## **Conclusions**
+
+    ## **Significance of this study**
+
+    ## **Things to look out for in follow-up research**
+
+    ### **Useful references to consider**
+    ...
+    ```
+
+8. 완료했습니다! 출력되는 멋진 결과를 지켜보세요! 🎉
 
 ---
 

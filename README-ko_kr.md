@@ -18,7 +18,7 @@
 - [(2) PaperSumGPT 실행하기](#2-PaperSumGPT-실행하기)
 - [Dependencies](#dependencies)
 - [License](#license)
-- [추가: 쉬운 방법 (ChatGPT splitter 사용)](#추가-쉬운-방법-ChatGPT-splitter-사용)
+- [더 쉬운 방법 (ChatGPT splitter 사용)](#더-쉬운-방법-ChatGPT-splitter-사용)
 
 ---
 ## 몇 가지 알림 사항들

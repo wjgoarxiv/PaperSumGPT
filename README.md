@@ -290,7 +290,7 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 
 You can even achieve the same results even without installing `papersumgpt`! 
 
-Thanks to the website [ChatGPT splitter](https://chatgptsplitter.com/), you can easily summarize the contents of a paper (but it requires you to click the splitted contents manually :) ). Here how you can do it: 
+Thanks to the website [ChatGPT splitter](https://chatgpt-prompt-splitter.jjdiaz.dev/), you can easily summarize the contents of a paper (but it requires you to click the splitted contents manually :) ). Here how you can do it: 
 
 1. Convert the paper texts & contents by using PDF-to-text converter. You can visit any of the following websites: 
     - [PDF to Text](https://pdftotext.com/)

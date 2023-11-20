@@ -7,7 +7,7 @@ chmod +x *
 
 # Unzip the old-repo! 
 unzip main.zip;
-cd main/;
+cd chatgpt-wrapper-main/;
 
 # Install the old-repo
 pip install -e . --quiet;
